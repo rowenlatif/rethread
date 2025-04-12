@@ -4,32 +4,38 @@
 
 import streamlit as st
 
+#### ------------------------ General ------------------------
+def HomeNav():
+    st.sidebar.page_link("Home.py", label="Home", icon="🏠")
+
+
+def AboutPageNav():
+    st.sidebar.page_link("pages/30_About.py", label="About", icon="🧠")
+
 
 #### ------------------------ Shopper ------------------------
 # def ShopperNav():
 
 
-## ------------------------ Seller ------------------------
-# def SellerNav():
-
-
 #### ------------------------ Trend Analyst ------------------------
 def TrendAnalystNav():
     st.sidebar.page_link(
-        "pages/02_TrendAnalyst_Home.py", label="Analyst Home", icon="📈"
+        "pages/Trend_Analyst_Home.py", label="Analyst Home", icon="📈"
     )
     st.sidebar.page_link(
-        "pages/10_Search_Trends.py", label="Search Trends", icon="🔍"
+        "pages/Search_Trends.py", label="Search Trends", icon="🔍"
     )
     st.sidebar.page_link(
-        "pages/20_Price_Trends.py", label="Price Trends", icon="💲"
+        "pages/Price_Trends.py", label="Price Trends", icon="💲"
     )
     st.sidebar.page_link(
-        "pages/30_Demographics.py", label="User Demographics", icon="🧍👥"
+        "pages/Reports.py", label="Reports", icon="📄"
     )
-    st.sidebar.page_link(
-        "pages/40_Reports.py", label="Reports", icon="📄"
-    )
+
+
+## ------------------------ Seller ------------------------
+# def SellerNav():
+
 
 # ------------------------ Admin ------------------------
 # def AdminNav():
