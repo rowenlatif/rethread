@@ -195,6 +195,15 @@ CREATE TABLE TagTrend (
     tag_id INT REFERENCES Tag(tag_id)
 );
 
+CREATE TABLE UserAnalytics (
+    user_id int PRIMARY KEY,
+    total_views INT,
+    total_saves INT,
+    avg_rating FLOAT,
+
+    user_id REFERENCES User(user_id)
+)
+
 -- EXAMPLE DATA --
 INSERT INTO Location VALUES (1, 'North Judithbury', 'DC', '97031', 'Rhodes PLC University');
 INSERT INTO Location VALUES (2, 'New Roberttown', 'IL', '30996', 'Guzman, Hoffman and Baldwin University');
