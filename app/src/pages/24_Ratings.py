@@ -21,11 +21,11 @@ except:
 
 if reviews:
     sort = st.selectbox("Sort by:", ["Highest to Lowest", "Lowest to Highest"])
-    if sort_order == "Highest to Lowest":
+    if sort == "Highest to Lowest":
         reviews_sorted = sorted(reviews, key=lambda x: x.get('rating', 0), reverse=True)
     else:
         reviews_sorted = sorted(reviews, key=lambda x: x.get('rating', 0))
 
-st.dataframe(reviews_sorted)
+    st.dataframe(reviews_sorted)
 else:
     st.write("No reviews found at this time")

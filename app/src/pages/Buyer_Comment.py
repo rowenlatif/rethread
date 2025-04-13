@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 ## has the user, message user can send to seller or review user can make to seller
 user_id = st.session_state['user']
-message = st.session_state.put("message")  
+message = st.session_state.put("message")
 review = st.session_state.put("review")
 
 
@@ -23,13 +23,14 @@ if st.button(action):
     if user_id:
         if st.session_state.message:
             response = requests.put(f"http://web-api:4000/message/message/{user_id}")
+            if response.status_code == 200:
+                st.success("Message sent")
+            else:
+                st.error("Failed to send message.")
+            
+        elif review:
+            response = requests.put(f"http://web-api:4000/message/review/{user_id}")
         if response.status_code == 200:
-            st.success("Message sent")
-else:
-    st.error("Failed to send message.")
-elif review:
-response = requests.put(f"http://web-api:4000/message/review/{user_id}")
-if response.status_code == 200:
-    st.success("Item unsaved successfully!")
-else:
-    st.error("Failed to send review.")
+            st.success("Item unsaved successfully!")
+        else:
+            st.error("Failed to send review.")

@@ -27,7 +27,8 @@ with st.form("new_listing_form"):
     ["Tops", "Bottoms", "Dresses", "Outerwear", "Accessories"])
 
 
-    seller_id = st.session_state.get('user_id', 1)  # Default to 1 if not logged in
+    # Default to 1 if not logged in
+    seller_id = st.session_state.get('user_id', 1)
 
     # Submit button
     submit_button = st.form_submit_button("Create Listing")
@@ -55,8 +56,8 @@ if submit_button:
     # Send data to API
     api_url = "https://your-api-endpoint.com/listings"
 
-    try:
-        response = requests.post(api_url, json=listing_data)
+try:
+    response = requests.post(api_url, json=listing_data)
 
     # Created
     if response.status_code == 201:
@@ -66,5 +67,6 @@ if submit_button:
     else:
         st.error(f"Failed to create listing: {response.status_code}")
         st.error(response.text)
-    except Exception as e:
+        
+except Exception as e:
     st.error(f"Error connecting to API: {e}")
