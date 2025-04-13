@@ -1,7 +1,8 @@
-from flask import Blueprint, request, jsonify, make_response, current_app
+import flask
 from rethread.api.backend.db_connection import db
 
-seller = Blueprint('/seller', __name__)
+#Blueprint for seller-related routes - organizes a group of related routes
+seller = flask.Blueprint('/seller', __name__)
 
 @seller.route('/seller-listings/<int:seller_id>', methods=['GET'])
 def get_seller_listings(seller_id):
@@ -14,11 +15,12 @@ def get_seller_listings(seller_id):
         WHERE l.seller_id = %s
           AND t.tag_name IN ('trendy', 'professional', 'vintage');
     '''
-    current_app.logger.info(f'GET /seller-listings/{seller_id} route')
+    # Log that this endpoint was called with the seller_id
+    flask.current_app.logger.info(f'GET /seller-listings/{seller_id} route')
     cursor = db.get_db().cursor()
     cursor.execute(query, (seller_id, seller_id))
     theData = cursor.fetchall()
-    response = make_response(jsonify(theData))
+    response = flask.make_response(flask.jsonify(theData))
     response.status_code = 200
     return response
 
@@ -30,11 +32,11 @@ def get_seller_transactions(seller_id):
         JOIN User u ON t.buyer_id = u.user_id
         WHERE t.seller_id = %s AND t.status = 'completed';
     '''
-    current_app.logger.info(f'GET /transactions/{seller_id} route')
+    flask.current_app.logger.info(f'GET /transactions/{seller_id} route')
     cursor = db.get_db().cursor()
     cursor.execute(query, (seller_id,))
     theData = cursor.fetchall()
-    response = make_response(jsonify(theData))
+    response = flask.make_response(flask.jsonify(theData))
     response.status_code = 200
     return response
 
@@ -47,11 +49,11 @@ def get_seller_messages(seller_id):
         WHERE m.recipient_id = %s
         ORDER BY m.timestamp DESC;
     '''
-    current_app.logger.info(f'GET /messages/{seller_id} route')
+    flask.current_app.logger.info(f'GET /messages/{seller_id} route')
     cursor = db.get_db().cursor()
     cursor.execute(query, (seller_id,))
     theData = cursor.fetchall()
-    response = make_response(jsonify(theData))
+    response = flask.make_response(flask.jsonify(theData))
     response.status_code = 200
     return response
 
@@ -61,7 +63,7 @@ def upload_photo():
             INSERT INTO ListingPhoto (photo_id, listing_id, tag_label, url)
             VALUES (%s, %s, %s, %s)
         '''
-    data = request.json
+    data = flask.request.json
     photo_id = data.get('photo_id')
     listing_id = data.get('listing_id')
     tag_label = data.get('tag_label')
@@ -70,7 +72,7 @@ def upload_photo():
     cursor = db.get_db().cursor()
     cursor.execute(query, (photo_id, listing_id, tag_label, url))
     db.get_db().commit()
-    response = make_response({'message': 'Photo uploaded successfully'}, 201)
+    response = flask.make_response({'message': 'Photo uploaded successfully'}, 201)
     return response
 
 @seller.route('/review', methods=['POST'])
@@ -79,7 +81,7 @@ def create_customer_review():
             INSERT INTO Review (review_id, reviewer_id, reviewee_id, comment, created_at, rating)
             VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, %s)
         '''
-    data = request.json
+    data = flask.request.json
     review_id = data.get('review_id')
     reviewer_id = data.get('reviewer_id')
     reviewee_id = data.get('reviewee_id')
@@ -90,7 +92,7 @@ def create_customer_review():
     cursor = db.get_db().cursor()
     cursor.execute(query, (review_id, reviewer_id, reviewee_id, comment, created_at, rating))
     db.get_db().commit()
-    response = make_response({'message': 'Review created successfully'}, 201)
+    response = flask.make_response({'message': 'Review created successfully'}, 201)
     return response
 
 @seller.route('/listings', methods=['POST'])
@@ -99,7 +101,7 @@ def create_listing():
             INSERT INTO Listing (listing_id, title, description, price, `condition`, brand, size, material, color, seller_id, group_id)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         '''
-    data = request.json
+    data = flask.request.json
     listing_id = data.get('listing_id')
     title = data.get('title')
     description = data.get('description')
@@ -115,7 +117,7 @@ def create_listing():
     cursor = db.get_db().cursor()
     cursor.execute(query, (listing_id, title, description, price, condition, brand, size, material, color, seller_id, group_id))
     db.get_db().commit()
-    response = make_response({'message': 'Listing posted!'}, 201)
+    response = flask.make_response({'message': 'Listing posted!'}, 201)
     return response
 
 @seller.route('/analytics/<int:seller_id>', methods=['GET'])
@@ -127,11 +129,11 @@ def get_listing_analytics(seller_id):
         WHERE l.seller_id = %s
         ORDER BY la.views DESC;
     '''
-    current_app.logger.info(f'GET /analytics/{seller_id} route')
+    flask.current_app.logger.info(f'GET /analytics/{seller_id} route')
     cursor = db.get_db().cursor()
     cursor.execute(query, (seller_id,))
     theData = cursor.fetchall()
-    response = make_response(jsonify(theData))
+    response = flask.make_response(flask.jsonify(theData))
     response.status_code = 200
     return response
 

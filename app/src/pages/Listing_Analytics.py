@@ -15,7 +15,7 @@ st.header('Listing Analytics')
 # You can access the session state to make a more customized/personalized app experience
 st.write(f"### Hi, {st.session_state['Samantha']}.")
 
-api_url = "https://your-api-endpoint.com/ListingAnalytics"
+api_url = "https://localhost:4000/ListingAnalytics"
 
 # Make GET request to the API
 response = requests.get(api_url)
