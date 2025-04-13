@@ -14,7 +14,19 @@ def AboutPageNav():
 
 
 #### ------------------------ Shopper ------------------------
-# def ShopperNav():
+def ShopperNav():
+    st.sidebar.page_link(
+        "pages/Buyer_Home.py", label = "Buyer Home", icon = "🛍️"
+    )
+    st.sidebar.page_link(
+        "pages/comment.py", label = "Users Comments", icon = "💬"
+    )
+    st.sidebar.page_link(
+        "pages/listing.py", label = "Listings", icon = "📄"
+    )
+    st.sidebar.page_link(
+    "pages/saving.py", label = "Listings", icon = "⏳"
+    )
 
 
 #### ------------------------ Trend Analyst ------------------------
@@ -38,11 +50,22 @@ def TrendAnalystNav():
 
 
 # ------------------------ Admin ------------------------
-# def AdminNav():
-
-
-
-
+def AdminNav():
+    st.siebar.page_link(
+        "pages/20_Admin_Home.py", label="Admin Home", icon="🛠️"
+    )
+    st.siebar.page_link(
+        "pages/25_Users.py", label="Users", icon="🧍"
+    )
+    st.siebar.page_link(
+        "pages/26_Listings.py", label="Listings", icon="🏷️"
+    )
+    st.siebar.page_link(
+        "pages/27_Groups.py", label="Groups", icon="👥"
+    )
+    st.siebar.page_link(
+        "pages/21_Flagged_Content.py", label="Reports", icon="📄"
+    )
 
 
 def SideBarLinks(show_home=False):
