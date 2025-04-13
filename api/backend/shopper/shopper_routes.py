@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response, current_app
 from rethread.api.backend.db_connection import db
 
+#Blueprint for shopper-related routes 
 shopper = Blueprint('/shopper', __name__)
 
 @shopper.route('/listings/search/<tag_name>', methods=['GET'])

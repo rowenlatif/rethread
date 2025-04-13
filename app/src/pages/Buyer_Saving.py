@@ -20,14 +20,14 @@ action = "Save" if saved else "Unsave"
 if st.button(action):
     if user_id and listing_id:
         if st.session_state.saved:
-            response = requests.post(f"http://web-api:4000/save/save/{user_id}/{listing_id}")
+            response = requests.post(f"http://localhost:4000/save/save/{user_id}/{listing_id}")
             if response.status_code == 200:
                 st.success("Item saved successfully!")
                 st.session_state.saved = True
             else:
                 st.error(f"Failed to save item. Server says: {response.text}")
         else:
-            response = requests.delete(f"http://web-api:4000/save/unsave/{user_id}/{listing_id}")
+            response = requests.delete(f"http://localhost:4000/save/unsave/{user_id}/{listing_id}")
             if response.status_code == 200:
                 st.success("Item unsaved successfully!")
                 st.session_state.saved = False

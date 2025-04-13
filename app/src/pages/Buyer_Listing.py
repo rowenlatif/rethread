@@ -15,7 +15,7 @@ else:
     listing_id = st.session_state['listing']
     st.title("Listing Information")
 
-    url = f"http://web-api:4000/listing/listing/{listing_id}"
+    url = f"http://localhost:4000/listing/listing/{listing_id}"
     response = requests.get(url)
 
 

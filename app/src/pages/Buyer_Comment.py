@@ -22,14 +22,14 @@ else: action = "Submit"
 if st.button(action):
     if user_id:
         if st.session_state.message:
-            response = requests.put(f"http://web-api:4000/message/message/{user_id}")
+            response = requests.put(f"http://localhost:4000/message/message/{user_id}")
             if response.status_code == 200:
                 st.success("Message sent")
             else:
                 st.error("Failed to send message.")
             
         elif review:
-            response = requests.put(f"http://web-api:4000/message/review/{user_id}")
+            response = requests.put(f"http://localhost:4000/message/review/{user_id}")
         if response.status_code == 200:
             st.success("Item unsaved successfully!")
         else:
