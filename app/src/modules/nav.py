@@ -25,7 +25,7 @@ def ShopperNav():
         "pages/listing.py", label = "Listings", icon = "📄"
     )
     st.sidebar.page_link(
-    "pages/saving.py", label = "Listings", icon = "⏳"
+    "pages/saving.py", label = "Savings", icon = "⏳"
     )
 
 
@@ -51,22 +51,36 @@ def TrendAnalystNav():
 
 # ------------------------ Admin ------------------------
 def AdminNav():
-    st.siebar.page_link(
+    st.sidebar.page_link(
         "pages/20_Admin_Home.py", label="Admin Home", icon="🛠️"
     )
-    st.siebar.page_link(
+    st.sidebar.page_link(
         "pages/25_Users.py", label="Users", icon="🧍"
     )
-    st.siebar.page_link(
+    st.sidebar.page_link(
         "pages/26_Listings.py", label="Listings", icon="🏷️"
     )
-    st.siebar.page_link(
+    st.sidebar.page_link(
         "pages/27_Groups.py", label="Groups", icon="👥"
     )
-    st.siebar.page_link(
+    st.sidebar.page_link(
         "pages/21_Flagged_Content.py", label="Reports", icon="📄"
     )
 
+
+def SellerNav():
+    st.sidebar.page_link(
+        "pages/Seller_Home.py", label="Analyst Home", icon="📈"
+    )
+    st.sidebar.page_link(
+        "pages/Post_Seller.py", label="Postings", icon="🔍"
+    )
+    st.sidebar.page_link(
+        "pages/Listing_Analytics.py", label="Listing Analytics", icon="💲"
+    )
+    st.sidebar.page_link(
+        "pages/Profile_Analytics.py", label="Profile Analytics", icon="📄"
+    )
 
 def SideBarLinks(show_home=False):
     """
@@ -89,21 +103,21 @@ def SideBarLinks(show_home=False):
     # Show the other page navigators depending on the users' role.
     if st.session_state["authenticated"]:
 
-        if role == "shopper":
+        if st.session_state["role"] == "shopper":
             ShopperNav()
-        elif role == "seller":
+        elif st.session_state["role"] == "seller":
             SellerNav()
-        elif role == "administrator":
+        elif st.session_state["role"] == "administrator":
             AdminNav()
-        elif role == "trend_analyst":
+        elif st.session_state["role"] == "trend_analyst":
             TrendAnalystNav()
     
     # Always show the About page at the bottom of the list of links
     # AboutPageNav()
        
-        if st.session_state["authenticated"]:
+    if st.session_state["authenticated"]:
         # Always show a logout button if there is a logged in user
-            if st.sidebar.button("Logout"):
-                del st.session_state["role"]
-                del st.session_state["authenticated"]
-                st.switch_page("Home.py")
+        if st.sidebar.button("Logout"):
+            del st.session_state["role"]
+            del st.session_state["authenticated"]
+            st.switch_page("Home.py")
