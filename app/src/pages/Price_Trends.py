@@ -48,7 +48,7 @@ if submitted:
             params["end_date"] = custom_range[1].isoformat()
 
         # API call (replace with real endpoint)
-        response = requests.get("http://web-api:4000/analytics/price-trends", params=params)
+        response = requests.get("http://local-host:4000/analytics/price-trends", params=params)
         response.raise_for_status()
 
         data = response.json()
