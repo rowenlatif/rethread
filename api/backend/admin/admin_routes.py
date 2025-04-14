@@ -9,7 +9,7 @@ admin = Blueprint('/admin', __name__)
 
 @admin.route('/messages', methods=['GET'])
 def get_recent_messages():
-   query = ''''
+   query = '''
        SELECT
            m.message_id,
            m.listing_id,
@@ -36,7 +36,7 @@ def get_recent_messages():
 
 @admin.route('/sellers/activity', methods=['GET'])
 def get_seller_activity():
-   query = ''''
+   query = '''
        SELECT
            u.user_id,
            u.role,
@@ -63,7 +63,7 @@ def get_seller_activity():
 
 @admin.route('/flags', methods=['GET'])
 def get_flagged_content():
-   query = ''''
+   query = '''
        SELECT
            f.flag_id,
            f.content_type,
@@ -87,7 +87,7 @@ def get_flagged_content():
 
 @admin.route('/verifications', methods=['GET'])
 def get_user_verifications():
-   query = ''''
+   query = '''
        SELECT
            v.verification_id,
            v.user_id,
@@ -108,7 +108,7 @@ def get_user_verifications():
 
 @admin.route('/reviews/flagged', methods=['GET'])
 def get_low_rated_reviews():
-   query = ''''
+   query = '''
        SELECT
            r.review_id,
            r.reviewer_id,
@@ -132,7 +132,7 @@ def get_low_rated_reviews():
 @admin.route('/groups', methods=['POST'])
 def create_group():
    data = request.json
-   query = ''''
+   query = '''
        INSERT INTO `Group` (group_id, created_by, name, type)
        VALUES (%s, %s, %s, %s)
    '''

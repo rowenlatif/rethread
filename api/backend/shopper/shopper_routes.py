@@ -8,7 +8,7 @@ shopper = Blueprint('/shopper', __name__)
 
 @shopper.route('/listings/search/<tag_name>', methods=['GET'])
 def get_listings_by_tag(tag_name):
-   query = """"
+   query = """
        SELECT l.*
        FROM ListingTag lt
        JOIN Listing l ON l.listing_id = lt.listing_id
@@ -27,7 +27,7 @@ def get_listings_by_tag(tag_name):
 
 @shopper.route('/users', methods=['POST'])
 def create_shopper():
-   query="""" INSERT INTO User (name, role, location_id, demographic_id)
+   query=""" INSERT INTO User (name, role, location_id, demographic_id)
        VALUES (%s, %s, %s, %s);
    """
    data = request.json
@@ -63,7 +63,7 @@ def create_shopper():
 #finding listing brand
 @shopper.route('/listing/<int:listing_id>', methods=['GET'])
 def get_listing(listing_id):
-   query = ''''
+   query = '''
        SELECT listing_id, brand
        FROM Listing
        WHERE listing_id = %s;
@@ -82,7 +82,7 @@ def get_users_by_location(city, state):
    current_app.logger.info(f'GET /users/location/{city}/{state} route')
 
 
-   query = ''''
+   query = '''
        SELECT u.user_id, u.name
        FROM User u
        JOIN Location l ON u.location_id = l.location_id
@@ -101,7 +101,7 @@ def get_users_by_location(city, state):
 #sending a message
 @shopper.route('/messages', methods=['POST'])
 def send_message():
-   query = ''''
+   query = '''
            INSERT INTO Message (message_id, sender_id, recipient_id, listing_id, content, timestamp)
            VALUES (%s, %s, %s, %s, %s, NOW())
        '''

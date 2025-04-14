@@ -8,7 +8,7 @@ seller = flask.Blueprint('/seller', __name__)
 
 @seller.route('/seller-listings/<int:seller_id>', methods=['GET'])
 def get_seller_listings(seller_id):
-   query = ''''
+   query = """
        SELECT l.*
        FROM Listing l
        JOIN ListingTag lt ON l.listing_id = lt.listing_id
@@ -16,7 +16,7 @@ def get_seller_listings(seller_id):
        JOIN User u ON u.location_id = (SELECT location_id FROM User WHERE user_id = %s)
        WHERE l.seller_id = %s
          AND t.tag_name IN ('trendy', 'professional', 'vintage');
-   '''
+   """
    # Log that this endpoint was called with the seller_id
    flask.current_app.logger.info(f'GET /seller-listings/{seller_id} route')
    cursor = db.get_db().cursor()
@@ -29,7 +29,7 @@ def get_seller_listings(seller_id):
 
 @seller.route('/transactions/<int:seller_id>', methods=['GET'])
 def get_seller_transactions(seller_id):
-   query = ''''
+   query = '''
        SELECT t.transaction_id, t.price, t.status, t.timestamp, u.name AS buyer_name
        FROM Transaction t
        JOIN User u ON t.buyer_id = u.user_id
@@ -46,7 +46,7 @@ def get_seller_transactions(seller_id):
 
 @seller.route('/messages/<int:seller_id>', methods=['GET'])
 def get_seller_messages(seller_id):
-   query = ''''
+   query = '''
        SELECT m.message_id, u.name AS buyer_name, m.content, m.timestamp
        FROM Message m
        JOIN User u ON m.sender_id = u.user_id
@@ -64,7 +64,7 @@ def get_seller_messages(seller_id):
 
 @seller.route('/listing-photo', methods=['POST'])
 def upload_photo():
-   query = ''''
+   query = '''
            INSERT INTO ListingPhoto (photo_id, listing_id, tag_label, url)
            VALUES (%s, %s, %s, %s)
        '''
@@ -84,7 +84,7 @@ def upload_photo():
 
 @seller.route('/review', methods=['POST'])
 def create_customer_review():
-   query = ''''
+   query = '''
            INSERT INTO Review (review_id, reviewer_id, reviewee_id, comment, created_at, rating)
            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, %s)
        '''
@@ -106,7 +106,7 @@ def create_customer_review():
 
 @seller.route('/listings', methods=['POST'])
 def create_listing():
-   query = ''''
+   query = '''
            INSERT INTO Listing (listing_id, title, description, price, `condition`, brand, size, material, color, seller_id, group_id)
            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
        '''
@@ -133,7 +133,7 @@ def create_listing():
 
 @seller.route('/analytics/<int:seller_id>', methods=['GET'])
 def get_listing_analytics(seller_id):
-   query = ''''
+   query: str = '''
        SELECT l.title, la.views, la.saves, la.shares
        FROM Listing l
        JOIN ListingAnalytics la ON l.listing_id = la.listing_id

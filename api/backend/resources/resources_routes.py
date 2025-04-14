@@ -6,7 +6,7 @@ resources = Blueprint('/resources', __name__)
 
 @resources.route('/listing', methods=['GET'])
 def get_all_listings():
-   query = ''''
+   query = '''
        SELECT listing_id, title, price
        FROM Listing;
    '''
@@ -21,7 +21,7 @@ def get_all_listings():
 
 @resources.route('/listing/<int:listing_id>', methods=['GET'])
 def get_listing_by_id(listing_id):
-   query = ''''
+   query = '''
        SELECT *
        FROM Listing
        WHERE listing_id = %s;
@@ -40,7 +40,7 @@ def update_listing_price(listing_id):
    new_price = data.get('new_price')
 
 
-   query = ''''
+   query = '''
        UPDATE PriceHistory
        SET price = %s
        WHERE listing_id = %s;
@@ -58,7 +58,7 @@ def update_listing_price(listing_id):
 def mark_product_as_sold(listing_id):
 
 
-   query = ''''
+   query = '''
        INSERT INTO Transaction (listing_id, method, buyer_id, seller_id, status, payment, price, timestamp)
        VALUES (%s, NULL, NULL, NULL, 'sold', NULL, 0.00, CURRENT_TIMESTAMP);
    '''

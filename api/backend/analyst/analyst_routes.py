@@ -9,7 +9,7 @@ analyst = Blueprint('/analyst', __name__)
 def get_recent_listings():
      current_app.logger.info('GET /listings/recent route')
  
-     query = ''''
+     query = '''
          SELECT * FROM Listing
          WHERE timestamp >= CURRENT_DATE - INTERVAL 7 DAY;
      '''
@@ -23,7 +23,7 @@ def get_recent_listings():
  
 @analyst.route('/trend-reports', methods=['POST'])
 def log_trend_report():
-     query = ''''
+     query = '''
          INSERT INTO TrendReport (report_id, exported_format, title, summary, filters, created_at, created_by)
          VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, %s);
      '''
@@ -43,7 +43,7 @@ def log_trend_report():
  
 @analyst.route('/price-history/<int:listing_id>', methods=['GET'])
 def get_price_history(listing_id):
-     query= ''''
+     query= '''
      SELECT
          listing_id,
          MIN(price) AS min_price,
@@ -64,7 +64,7 @@ def get_price_history(listing_id):
 @analyst.route('/search-trends', methods=['GET'])
 def search_trends_time_demographic():
  
-     query = ''''
+     query = '''
              SELECT d.age, d.gender, d.location_id,
                     EXTRACT(MONTH FROM sq.timestamp) AS search_month,
                     COUNT(*) AS search_count
@@ -86,7 +86,7 @@ def search_trends_time_demographic():
  
 @analyst.route('/tags/trending', methods=['GET'])
 def get_trending_tags():
-     query = ''''
+     query = '''
          SELECT t.tag_name, COUNT(*) AS usage_count
          FROM ListingTag lt
          JOIN Tag t ON lt.tag_id = t.tag_id
@@ -106,7 +106,7 @@ def get_trending_tags():
 @analyst.route('/search-keywords', methods=['GET'])
 def get_top_search_keywords():
  
-     query = ''''
+     query = '''
          SELECT keyword, SUM(usage_count) AS total_usage
          FROM SearchTrend
          WHERE trend_date >= CURRENT_DATE - INTERVAL 30 DAY
