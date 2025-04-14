@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, make_response, current_app
 from rethread.api.backend.db_connection import db
  
  
-analyst = Blueprint('/analyst', __name__)
+analyst = Blueprint('analyst', __name__)
  
  
 @analyst.route('/listings/recent', methods=['GET'])
@@ -37,7 +37,7 @@ def log_trend_report():
      created_by = data.get('created_by')
  
      cursor = db.get_db().cursor()
-     cursor.execute(query, (report_id, exported_format, title, summary, filters, created_at, created_by))
+     cursor.execute(query, (report_id, exported_format, title, summary, filters, created_at, created_by,))
      response = make_response(jsonify('trend report created'), 201)
      return response
  

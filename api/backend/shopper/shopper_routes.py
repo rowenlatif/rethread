@@ -3,7 +3,7 @@ from rethread.api.backend.db_connection import db
 
 
 # This is the Blueprint for shopper-related routes
-shopper = Blueprint('/shopper', __name__)
+shopper = Blueprint('shopper', __name__)
 
 
 @shopper.route('/listings/search/<tag_name>', methods=['GET'])
@@ -44,7 +44,7 @@ def create_shopper():
        )
    try:
        cursor = db.get_db().cursor()
-       cursor.execute(query, (name, role, location_id, demographic_id))
+       cursor.execute(query, (name, role, location_id, demographic_id,))
        db.get_db().commit()
 
 
@@ -91,7 +91,7 @@ def get_users_by_location(city, state):
 
 
    cursor = db.get_db().cursor()
-   cursor.execute(query, (city, state))
+   cursor.execute(query, (city, state,))
    theData = cursor.fetchall()
    response = make_response(jsonify(theData))
    response.status_code = 200
@@ -121,7 +121,7 @@ def send_message():
        )
    try:
        cursor = db.get_db().cursor()
-       cursor.execute(query, (message, sender_id, recipient_id, listing_id, content, timestamp))
+       cursor.execute(query, (message, sender_id, recipient_id, listing_id, content, timestamp,))
        db.get_db().commit()
 
 

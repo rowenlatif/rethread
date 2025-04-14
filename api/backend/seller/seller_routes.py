@@ -3,7 +3,7 @@ from rethread.api.backend.db_connection import db
 
 
 #Blueprint for seller-related routes - organizes a group of related routes
-seller = flask.Blueprint('/seller', __name__)
+seller = flask.Blueprint('seller', __name__)
 
 
 @seller.route('/seller-listings/<int:seller_id>', methods=['GET'])
@@ -20,7 +20,7 @@ def get_seller_listings(seller_id):
    # Log that this endpoint was called with the seller_id
    flask.current_app.logger.info(f'GET /seller-listings/{seller_id} route')
    cursor = db.get_db().cursor()
-   cursor.execute(query, (seller_id, seller_id))
+   cursor.execute(query, (seller_id, ))
    theData = cursor.fetchall()
    response = flask.make_response(flask.jsonify(theData))
    response.status_code = 200
@@ -76,7 +76,7 @@ def upload_photo():
 
 
    cursor = db.get_db().cursor()
-   cursor.execute(query, (photo_id, listing_id, tag_label, url))
+   cursor.execute(query, (photo_id, listing_id, tag_label, url,))
    db.get_db().commit()
    response = flask.make_response({'message': 'Photo uploaded successfully'}, 201)
    return response
@@ -98,7 +98,7 @@ def create_customer_review():
 
 
    cursor = db.get_db().cursor()
-   cursor.execute(query, (review_id, reviewer_id, reviewee_id, comment, created_at, rating))
+   cursor.execute(query, (review_id, reviewer_id, reviewee_id, comment, created_at, rating,))
    db.get_db().commit()
    response = flask.make_response({'message': 'Review created successfully'}, 201)
    return response
@@ -125,7 +125,7 @@ def create_listing():
 
 
    cursor = db.get_db().cursor()
-   cursor.execute(query, (listing_id, title, description, price, condition, brand, size, material, color, seller_id, group_id))
+   cursor.execute(query, (listing_id, title, description, price, condition, brand, size, material, color, seller_id, group_id,))
    db.get_db().commit()
    response = flask.make_response({'message': 'Listing posted!'}, 201)
    return response

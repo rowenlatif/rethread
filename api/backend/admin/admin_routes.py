@@ -4,7 +4,7 @@ from rethread.api.backend.db_connection import db
 
 
 
-admin = Blueprint('/admin', __name__)
+admin = Blueprint('admin', __name__)
 
 
 @admin.route('/messages', methods=['GET'])

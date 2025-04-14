@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, make_response, current_app
 from rethread.api.backend.db_connection import db
 
 
-resources = Blueprint('/resources', __name__)
+resources = Blueprint('resources', __name__)
 
 @resources.route('/listing', methods=['GET'])
 def get_all_listings():
@@ -47,7 +47,7 @@ def update_listing_price(listing_id):
    '''
    current_app.logger.info(f'PUT /listing/{listing_id} route')
    cursor = db.get_db().cursor()
-   cursor.execute(query, (new_price, listing_id))
+   cursor.execute(query, (new_price, listing_id,))
    db.get_db().commit()
    response = make_response(jsonify({'message': 'Price updated'}))
    response.status_code = 200
