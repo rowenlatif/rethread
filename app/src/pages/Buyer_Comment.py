@@ -19,7 +19,7 @@ elif review: action = "review"
 else: action = "Submit"
 
 ## uses the button to let the user click a button to send a message or send a review
-if st.button(action):
+if st.button(action): 
     if user_id:
         if st.session_state.message:
             response = requests.put(f"http://localhost:4000/message/message/{user_id}")

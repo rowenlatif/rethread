@@ -201,8 +201,8 @@ CREATE TABLE UserAnalytics (
     total_saves INT,
     avg_rating FLOAT,
 
-    user_id REFERENCES User(user_id)
-)
+    FOREIGN KEY (user_id) REFERENCES User(user_id)
+);
 
 -- EXAMPLE DATA --
 INSERT INTO Location VALUES (1, 'North Judithbury', 'DC', '97031', 'Rhodes PLC University');
