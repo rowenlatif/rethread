@@ -55,7 +55,7 @@ def get_price_history(listing_id):
  
      current_app.logger.info(f'GET /price-history/{listing_id} route')
      cursor = db.get_db().cursor()
-     cursor.execute(query, (listing_id))
+     cursor.execute(query, (listing_id,))
      theData = cursor.fetchall()
      response = make_response(jsonify(theData))
      response.status_code = 200

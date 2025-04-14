@@ -90,7 +90,7 @@ def get_users_by_location(city, state):
    '''
 
 
-   cursor = db.cursor().cursor()
+   cursor = db.get_db().cursor()
    cursor.execute(query, (city, state))
    theData = cursor.fetchall()
    response = make_response(jsonify(theData))
