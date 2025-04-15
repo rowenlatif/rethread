@@ -3,11 +3,11 @@ logging.basicConfig(level = logging.DEBUG)
 
 from flask import Flask
 
-from rethread.api.backend.db_connection import db
-from rethread.api.backend.admin.admin_routes import admin
-from rethread.api.backend.shopper.shopper_routes import shopper
-from rethread.api.backend.seller.seller_routes import seller
-from rethread.api.backend.analyst.analyst_routes import analyst
+from backend.db_connection import db
+from backend.admin.admin_routes import admin
+from backend.shopper.shopper_routes import shopper
+from backend.seller.seller_routes import seller
+from backend.analyst.analyst_routes import analyst
 from dotenv import load_dotenv
 import os
 

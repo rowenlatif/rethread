@@ -1,5 +1,5 @@
 import flask
-from rethread.api.backend.db_connection import db
+from backend.db_connection import db
 
 
 #Blueprint for seller-related routes - organizes a group of related routes

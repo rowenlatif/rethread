@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, make_response, current_app
-from rethread.api.backend.db_connection import db
+from backend.db_connection import db
 
 
 # This is the Blueprint for shopper-related routes
