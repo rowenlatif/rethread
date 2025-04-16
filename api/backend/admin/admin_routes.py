@@ -148,3 +148,21 @@ def create_group():
    response.status_code = 201
    return response
 
+@admin.route('/groups/all', methods=['GET'])
+def get_all_groups():
+   query = '''
+       SELECT
+           g.group_id,
+            g.created_by,
+            g.name,
+            g.type
+        FROM `Group` g
+        ORDER BY g.group_id ASC;
+   '''
+   current_app.logger.info(f'GET /groups/all route')
+   cursor = db.get_db().cursor()
+   cursor.execute(query)
+   theData = cursor.fetchall()
+   response = make_response(jsonify(theData))
+   response.status_code = 200
+   return response
