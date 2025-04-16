@@ -14,21 +14,12 @@ st.write('\n\n')
 st.write('## All in-progress disputes')
 
 all_disputes = requests.get('http://api:4000/d/disputes').json() ## need to update with actual api requests
-resolved_disputes = [d for d in all_disputes if d.get("status", "").lower() = "resolved"]
+resolved_disputes = [d for d in all_disputes if d.get("status", "").lower() == "resolved"]
 
 try:
     if resolved_disputes:
         st.dataframe(resolved_disputes)
-    st.write('#### Click to expand dispute details')
-    for dispute in resolved_disputes:
-        with st.expander(f"Dispute ID: {dispute.get('dispute_id')}"):
-            st.write(f"**Status:** {dispute.get('status')}")
-    st.write(f"**Seller ID:** {dispute.get('seller_id')}")
-    st.write(f"**Buyer ID:** {dispute.get('buyer_id')}")
-    st.write(f"**Listing ID:** {dispute.get('listing_id')}")
-    st.write(f"**Created At:** {dispute.get('created_at')}")
-    st.write(f"**Resolution:** {dispute.get('resolution') or 'N/A'}") 
     else:
-    st.write("no resolved disputes at the time")
+        st.write("no resolved disputes at the time")
 except:
     st.write("could not conenct to database to retreive disputes")
