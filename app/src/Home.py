@@ -42,24 +42,17 @@ st.write('### Hi! As which user would you like to log in?')
 # functionality, we put a button on the screen that the user 
 # can click to MIMIC logging in as that mock user. 
 
-if st.button("Act as Carol, a highschooler in Salt Lake City, Utah", 
+if st.button("Act as Samatha, a young woman working in PR in NYC", 
         type = 'primary', 
         use_container_width=True):
         st.session_state['authenticated'] = True
-        st.session_state['role'] = 'Shopper' 
-        st.session_state['first_name'] = 'Carol'
-        logger.info("Logging in Carol")
+        st.session_state['role'] = 'Seller' 
+        st.session_state['first_name'] = 'Samantha'
+        logger.info("Logging in Samantha")
         st.switch_page('pages/Buyer_Home.py')
 
-if st.button('Act as David, a middle aged man from Livingston, New Jersey', 
-        type = 'primary', 
-        use_container_width=True):
-        st.session_state['authenticated'] = True
-        st.session_state['role'] = 'Shopper'
-        st.session_state['first_name'] = 'David'
-        st.switch_page('pages/Buyer_Home.py')
 
-if st.button('Act as Laura, a college student from Boston, Massachusetts', 
+if st.button('Act as Sally, a college student from Boston, Massachusetts', 
         type = 'primary', 
         use_container_width=True):
         st.session_state['authenticated'] = True
@@ -80,5 +73,5 @@ if st.button('Act as Mark, a Trend Analyst',
             use_container_width=True):
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'trend_analyst'
-    st.session_state['first_name'] = 'Fark'
+    st.session_state['first_name'] = 'Mark'
     st.switch_page('pages/Trend_Analyst_Home.py')
