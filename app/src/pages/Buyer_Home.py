@@ -16,14 +16,14 @@ st.write('### What would you purchase today?')
 if st.button('Listings', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/listing.py')
+  st.switch_page('pages/Buyer_Listing.py')
 
 if st.button('Saving', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/saving.py')
+  st.switch_page('pages/Buyer_Saving.py')
 
 if st.button('Comments', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/comment.py')
+  st.switch_page('pages/Buyer_Comment.py')
