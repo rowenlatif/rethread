@@ -166,3 +166,30 @@ def get_all_groups():
    response = make_response(jsonify(theData))
    response.status_code = 200
    return response
+
+@admin.route('/listings/all', methods=['GET'])
+def get_all_listings():
+   query = '''
+       SELECT
+           l.listing_id,
+           l.title,
+           l.description,
+           l.price,
+           l.`condition`
+           l.brand
+           l.size
+           l.material
+           l.color
+           l.timestamp
+           l.seller_id
+           l.group_id
+       FROM Listings l
+       ORDER BY l.timestamp DESC;
+   '''
+   current_app.logger.info(f'GET /verifications route')
+   cursor = db.get_db().cursor()
+   cursor.execute(query)
+   theData = cursor.fetchall()
+   response = make_response(jsonify(theData))
+   response.status_code = 200
+   return response
