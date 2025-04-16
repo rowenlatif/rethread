@@ -45,9 +45,6 @@ def TrendAnalystNav():
     )
 
 
-## ------------------------ Seller ------------------------
-# def SellerNav():
-
 
 # ------------------------ Admin ------------------------
 def AdminNav():
@@ -67,7 +64,7 @@ def AdminNav():
         "pages/21_Flagged_Content.py", label="Reports", icon="📄"
     )
 
-
+## ------------------------ Seller ------------------------
 def SellerNav():
     st.sidebar.page_link(
         "pages/Seller_Home.py", label="Analyst Home", icon="📈"
@@ -88,7 +85,7 @@ def SideBarLinks(show_home=False):
     """
     
     # Add a logo to the sidebar always
-    st.sidebar.image("assets/logo.png", width=150)
+    st.sidebar.image("app/src/assets/logo.png", width=150)
 
     # If there is no logged in user, redirect to the Home (Landing) page
     if "authenticated" not in st.session_state:
