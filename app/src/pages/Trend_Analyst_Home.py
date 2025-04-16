@@ -24,11 +24,6 @@ if st.button('View Price Trends',
              use_container_width=True):
   st.switch_page('pages/Price_Trends.py')
 
-if st.button('View User Demographics', 
-             type='primary',
-             use_container_width=True):
-  st.switch_page('pages/User_Demographics.py')
-
 if st.button('View Reports', 
              type='primary',
              use_container_width=True):
