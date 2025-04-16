@@ -49,7 +49,7 @@ if st.button("Act as Samatha, a young woman working in PR in NYC",
         st.session_state['role'] = 'Seller' 
         st.session_state['first_name'] = 'Samantha'
         logger.info("Logging in Samantha")
-        st.switch_page('pages/Buyer_Home.py')
+        st.switch_page('pages/Seller_Home.py')
 
 
 if st.button('Act as Sally, a college student from Boston, Massachusetts', 

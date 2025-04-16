@@ -13,7 +13,7 @@ SideBarLinks()
 st.header('Listing Analytics')
 
 # You can access the session state to make a more customized/personalized app experience
-st.write(f"### Hi, {st.session_state['Samantha']}.")
+st.write(f"### Hi, {st.session_state['first_name']}.")
 
 api_url = "https://localhost:4000/ListingAnalytics"
 
