@@ -4,7 +4,7 @@ import datetime
 
 
 st.header('Create New Listing')
-
+api_url = "http://localhost:4000/seller/listings"
 
 with st.form("new_listing_form"):
     title = st.text_input("Title")
@@ -54,19 +54,17 @@ if submit_button:
     }
 
     # Send data to API
-    api_url = "https://your-api-endpoint.com/listings"
-
-try:
-    response = requests.post(api_url, json=listing_data)
+    try:
+        response = requests.post(api_url, json=listing_data)
 
     # Created
-    if response.status_code == 201:
-        st.success("Listing created successfully!")
+        if response.status_code == 201:
+            st.success("Listing created successfully!")
         # Celebrate with some balloons!
-        st.balloons()
-    else:
-        st.error(f"Failed to create listing: {response.status_code}")
-        st.error(response.text)
+            st.balloons()
+        else:
+            st.error(f"Failed to create listing: {response.status_code}")
+            st.error(response.text)
         
-except Exception as e:
-    st.error(f"Error connecting to API: {e}")
+    except Exception as e:
+        st.error(f"Error connecting to API: {e}")

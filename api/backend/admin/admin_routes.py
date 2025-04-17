@@ -175,18 +175,18 @@ def get_all_listings():
            l.title,
            l.description,
            l.price,
-           l.`condition`
-           l.brand
-           l.size
-           l.material
-           l.color
-           l.timestamp
-           l.seller_id
+           l.`condition`,
+           l.brand,
+           l.size,
+           l.material,
+           l.color,
+           l.timestamp,
+           l.seller_id,
            l.group_id
-       FROM Listings l
+       FROM Listing l
        ORDER BY l.timestamp DESC;
    '''
-   current_app.logger.info(f'GET /verifications route')
+   current_app.logger.info(f'GET /listings/all route')  # Also fixed the log message
    cursor = db.get_db().cursor()
    cursor.execute(query)
    theData = cursor.fetchall()

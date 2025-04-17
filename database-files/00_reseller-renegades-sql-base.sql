@@ -53,6 +53,10 @@ CREATE TABLE Listing (
     group_id INT REFERENCES `Group`(group_id)
 );
 
+ALTER TABLE Listing
+MODIFY COLUMN listing_id INT AUTO_INCREMENT PRIMARY KEY;
+
+
 CREATE TABLE SearchQuery (
     query_id SERIAL PRIMARY KEY,
     keyword VARCHAR(255),
@@ -883,3 +887,14 @@ INSERT INTO ListingTag VALUES (11, 1);
 INSERT INTO ListingTag VALUES (27, 15);
 INSERT INTO ListingTag VALUES (39, 16);
 INSERT INTO ListingTag VALUES (19, 2);
+INSERT INTO ListingAnalytics (listing_id, views, shares, saves) VALUES
+(1, 120, 15, 30),
+(2, 85, 10, 25),
+(3, 200, 50, 75),
+(4, 150, 20, 35),
+(5, 95, 12, 28),
+(6, 110, 18, 32),
+(7, 75, 8, 20),
+(8, 180, 30, 45),
+(9, 130, 25, 38),
+(10, 90, 14, 26);

@@ -2,5 +2,9 @@
 secrets.toml
 __pycache__
 secrets/
-api/.env.template
+.env
 .env.local
+/venv/
+/venv
+/venv/lib
+venv

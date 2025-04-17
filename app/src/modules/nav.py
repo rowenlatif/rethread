@@ -55,7 +55,7 @@ def AdminNav():
         "pages/25_Users.py", label="Users", icon="🧍"
     )
     st.sidebar.page_link(
-        "pages/26_Listings.py", label="Listings", icon="🏷️"
+        "pages/26_Listing.py", label="Listings", icon="🏷️"
     )
     st.sidebar.page_link(
         "pages/27_Groups.py", label="Groups", icon="👥"

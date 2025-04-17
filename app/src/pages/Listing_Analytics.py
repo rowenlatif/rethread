@@ -14,11 +14,11 @@ st.header('Listing Analytics')
 
 # You can access the session state to make a more customized/personalized app experience
 st.write(f"### Hi, {st.session_state['first_name']}.")
-
-api_url = "https://localhost:4000/ListingAnalytics"
-
-# Make GET request to the API
+seller_id = 10  # Replace with actual seller ID or get from session state
+api_url = f"http://localhost:4000/seller/analytics/{seller_id}"
 response = requests.get(api_url)
+st.write("Status code:", response.status_code)
+st.write("Response content:", response.text)
 
 # Check if request was successful
 # Parse JSON response into a pandas DataFrame
