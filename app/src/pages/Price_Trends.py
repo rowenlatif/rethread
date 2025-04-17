@@ -11,20 +11,17 @@ SideBarLinks()
 st.header("Price Trends")
 st.caption("Analyze how item prices shift over time by listing.")
 
-# --- Filter Form ---
 st.subheader("View Price Trend")
 with st.form("price_trend_form"):
     listing_id = st.text_input("Listing ID", placeholder="e.g. 1")
     submitted = st.form_submit_button("View Trend")
 
-# --- Fetch and Visualize ---
 if submitted:
     if not listing_id.strip().isdigit():
         st.warning("Please enter a valid numeric Listing ID.")
         st.stop()
 
     try:
-        # Fetch price history from API
         response = requests.get(
             f"http://localhost:4000/analyst/price-history/{listing_id.strip()}"
         )

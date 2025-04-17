@@ -3,16 +3,12 @@ import requests
 import pandas as pd
 from modules.nav import SideBarLinks
 
-# Setup navigation
 SideBarLinks()
 
-# Page title
 st.title("Listings")
 
-# User ID for shopper
 user_id = "sally"
 
-# Fetch all listings
 try:
     url = "http://localhost:4000/resources/listing"
     response = requests.get(url)
@@ -27,22 +23,17 @@ except Exception as e:
     st.error(f"An error occurred: {e}")
     listings_df = pd.DataFrame()
 
-# Initialize saved listings in session state
 if 'saved_listings' not in st.session_state:
     st.session_state.saved_listings = []
 
-# Display listings with save buttons
 if not listings_df.empty:
     st.subheader(f"Available Listings ({len(listings_df)} items)")
-    
-    # Display each listing 
+
     for index, row in listings_df.iterrows():
         listing_id = row['listing_id']
         is_saved = listing_id in st.session_state.saved_listings
-        
-        # Create expandable card for each listing
+
         with st.expander(f"{row['title']} - ${row['price']}"):
-            # Two columns - listing details and save button
             col1, col2 = st.columns([3, 1])
             
             with col1:
@@ -51,11 +42,9 @@ if not listings_df.empty:
                         st.write(f"**{key.capitalize()}**: {value}")
             
             with col2:
-                # Save/Unsave button
                 action = "Unsave" if is_saved else "Save"
                 if st.button(action, key=f"save_{listing_id}"):
                     try:
-                        # Call the API to toggle saved status
                         api_url = "http://localhost:4000/shopper/toggle-save"
                         payload = {
                             "user_id": user_id,
@@ -63,8 +52,7 @@ if not listings_df.empty:
                             "action": "unsave" if is_saved else "save"
                         }
                         toggle_response = requests.post(api_url, json=payload)
-                        
-                        # Update local state
+
                         if is_saved:
                             st.session_state.saved_listings.remove(listing_id)
                         else:
@@ -74,18 +62,16 @@ if not listings_df.empty:
                         st.success(message)
                     except Exception as e:
                         st.error(f"API Error: {e}. Updating local state only.")
-                        
-                        # Update local state even if API fails
+
                         if is_saved:
                             st.session_state.saved_listings.remove(listing_id)
                         else:
                             st.session_state.saved_listings.append(listing_id)
                         
-                    st.rerun()  # Changed from st.experimental_rerun()
+                    st.rerun()
 else:
     st.info("No listings found.")
 
-# Show saved listings
 st.markdown("---")
 st.subheader("Your Saved Listings")
 

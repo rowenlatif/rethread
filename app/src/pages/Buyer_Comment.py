@@ -12,14 +12,11 @@ user_id = st.session_state['user']
 
 st.title("Marketplace Communications")
 
-# Message section
 st.subheader("Message to Seller")
 message = st.text_area("Message to seller", key="message_input")
 
-# Send button
 if st.button("Send Message"):
     if message:
-        # Simplified data with fixed values
         data = {
             "message_id": "msg123",
             "sender_id": user_id,

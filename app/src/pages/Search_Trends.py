@@ -12,7 +12,6 @@ SideBarLinks()
 st.header('Search Trends')
 st.caption("Analyze search query data by keyword, demographic, and time period")
 
-# --- Define sample data for dropdowns ---
 sample_keywords = ["vintage jeans", "lululemon", "y2k top", "nike shoes", "prada bag", 
                   "brandy melville", "urban outfitters", "zara blazer", "shein top", "adidas campus"]
 age_groups = ["All Ages", "18-24", "25-30", "31-35"]
@@ -20,7 +19,6 @@ genders = ["All Genders", "male", "female", "nonbinary"]
 locations = ["All Locations", "New York City", "Los Angeles", "Chicago", "Boston", "Miami"]
 time_periods = ["Last 7 Days", "Last 30 Days", "Last 3 Months", "Custom Range"]
 
-# --- Filter Form ---
 st.subheader("Filter Search Trends")
 
 with st.form("search_trends_form"):
@@ -43,7 +41,6 @@ with st.form("search_trends_form"):
     
     submitted = st.form_submit_button("Apply Filters")
 
-# --- Fetch and Visualize ---
 if submitted:
     try:
         st.info(f"Showing search trends for: Keyword='{keyword}', Age='{age_group}', Gender='{gender}', Location='{location}', Time='{time_period}'")
@@ -58,13 +55,13 @@ if submitted:
             df = pd.DataFrame(demo_data)
             st.subheader("👥 Search Activity Demographics")
             
-            # Convert month number to name for better readability
+
             if 'search_month' in df.columns:
                 df['month_name'] = pd.to_numeric(df['search_month']).apply(
                     lambda x: datetime(2025, int(x), 1).strftime('%B')
                 )
             
-            # Create visualization by gender
+
             if 'gender' in df.columns and 'search_count' in df.columns:
                 fig1 = px.bar(
                     df,
@@ -82,8 +79,7 @@ if submitted:
                 )
                 fig1.update_layout(xaxis_title=None, yaxis_title=None)
                 st.plotly_chart(fig1, use_container_width=True)
-            
-            # Create visualization by age group
+
             if 'age' in df.columns and 'search_count' in df.columns:
                 fig2 = px.bar(
                     df,
@@ -101,8 +97,7 @@ if submitted:
                 )
                 fig2.update_layout(xaxis_title=None, yaxis_title=None)
                 st.plotly_chart(fig2, use_container_width=True)
-            
-            # Create visualization by location
+
             if 'location_id' in df.columns and 'search_count' in df.columns:
                 fig3 = px.bar(
                     df,

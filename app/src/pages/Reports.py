@@ -13,7 +13,6 @@ if "report_created" not in st.session_state:
 st.header("Reports")
 st.caption("Build and view trend reports.")
 
-# --- Create Report Form ---
 st.subheader("📄 Create New Report")
 
 timeframe_options = {
