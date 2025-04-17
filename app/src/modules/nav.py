@@ -46,23 +46,23 @@ def TrendAnalystNav():
 
 
 
+
 # ------------------------ Admin ------------------------
 def AdminNav():
     st.sidebar.page_link(
         "pages/20_Admin_Home.py", label="Admin Home", icon="🛠️"
     )
     st.sidebar.page_link(
-        "pages/25_Users.py", label="Users", icon="🧍"
+        "pages/21_Flagged_Content.py", label="Users", icon="🚩"
     )
     st.sidebar.page_link(
-        "pages/26_Listing.py", label="Listings", icon="🏷️"
+        "pages/24_Ratings.py", label="Ratings", icon="⭐"
     )
     st.sidebar.page_link(
         "pages/27_Groups.py", label="Groups", icon="👥"
     )
-    st.sidebar.page_link(
-        "pages/21_Flagged_Content.py", label="Reports", icon="📄"
-    )
+
+
 
 ## ------------------------ Seller ------------------------
 def SellerNav():

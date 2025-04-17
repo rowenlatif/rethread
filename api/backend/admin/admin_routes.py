@@ -186,10 +186,62 @@ def get_all_listings():
        FROM Listing l
        ORDER BY l.timestamp DESC;
    '''
-   current_app.logger.info(f'GET /listings/all route')  # Also fixed the log message
+   current_app.logger.info(f'GET /listings/all route')
    cursor = db.get_db().cursor()
    cursor.execute(query)
    theData = cursor.fetchall()
    response = make_response(jsonify(theData))
    response.status_code = 200
    return response
+
+@admin.route('/flags/<int:flag_id>', methods=['PUT'])
+def update_flag_status(flag_id):
+    data = request.json
+    query = '''
+        UPDATE FlaggedContent
+        SET status = %s
+        WHERE flag_id = %s;
+    '''
+    current_app.logger.info(f'PUT /flags/{flag_id} route')
+    cursor = db.get_db().cursor()
+    cursor.execute(query, (
+        data['status'],
+        flag_id
+    ))
+    db.get_db().commit()
+    
+    response = make_response({'message': f'Flag status updated to {data["status"]}'})
+    response.status_code = 200
+    return response
+
+
+@admin.route('/reviews/<int:review_id>', methods=['DELETE'])
+def delete_review(review_id):
+    query = '''
+        DELETE FROM Review
+        WHERE review_id = %s;
+    '''
+    current_app.logger.info(f'DELETE /reviews/{review_id} route')
+    cursor = db.get_db().cursor()
+    cursor.execute(query, (review_id,))
+    db.get_db().commit()
+    
+    response = make_response({'message': f'Review {review_id} deleted successfully'})
+    response.status_code = 200
+    return response
+
+
+@admin.route('/groups/<int:group_id>', methods=['PUT'])
+def update_group(group_id):
+    data = request.json
+    query = '''
+        UPDATE `Group`
+        SET name = %s, type = %s
+        WHERE group_id = %s
+    '''
+    cursor = db.get_db().cursor()
+    cursor.execute(query, (data['name'], data['type'], group_id))
+    db.get_db().commit()
+    response = make_response({'message': 'Group updated successfully'})
+    response.status_code = 200
+    return response

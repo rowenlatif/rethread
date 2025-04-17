@@ -147,13 +147,3 @@ def get_listing_analytics(seller_id):
    response = flask.make_response(flask.jsonify(theData))
    response.status_code = 200
    return response
-
-
-
-
-
-
-
-
-
-

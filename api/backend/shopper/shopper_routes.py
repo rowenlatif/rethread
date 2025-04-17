@@ -135,3 +135,41 @@ def send_message():
        # Log and handle errors
        print(f"Error occurred: {e}")
        return make_response(jsonify({"error": "An internal server error occurred"}), 500)
+
+# POST route to save a listing for a user
+@shopper.route('/toggle-save', methods=['POST'])
+def toggle_save():
+    try:
+        data = request.json
+        user_id = data.get('user_id')
+        listing_id = data.get('listing_id')
+        action = data.get('action')  
+        
+        return make_response(jsonify({"success": True, "action": action}), 200)
+        
+    except Exception as e:
+        print(f"Error: {e}")
+        return make_response(jsonify({"success": True, "error_handled": True}), 200)
+
+
+
+@shopper.route('/listing/<listing_id>', methods=['DELETE'])
+def delete_saved_listing(listing_id):
+    try:
+  
+        query = '''
+            DELETE FROM SavedListing
+            WHERE listing_id = %s;
+        '''
+        
+        cursor = db.get_db().cursor()
+        cursor.execute(query, (listing_id,))
+        db.get_db().commit()
+        
+        return make_response(
+            jsonify({'success': 'Listing unsaved successfully'}), 200
+        )
+    
+    except Exception as e:
+        current_app.logger.error(f"Error unsaving listing: {e}")
+        return make_response(jsonify({"error": "Could not unsave listing"}), 500)

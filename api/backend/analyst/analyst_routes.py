@@ -20,12 +20,12 @@ def get_recent_listings():
      response = make_response(jsonify(theData))
      response.status_code = 200
      return response
- 
+
 @analyst.route('/trend-reports', methods=['POST'])
 def log_trend_report():
      query = '''
-         INSERT INTO TrendReport (report_id, exported_format, title, summary, filters, created_at, created_by)
-         VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, %s);
+         INSERT INTO TrendReport (report_id, exported_format, title, summary, filters, created_by)
+         VALUES (%s, %s, %s, %s, %s, %s);
      '''
      data = request.json
      report_id = data.get('report_id')
@@ -33,11 +33,10 @@ def log_trend_report():
      title = data.get('title')
      summary = data.get('summary')
      filters = data.get('filters')
-     created_at = data.get('created_at')
      created_by = data.get('created_by')
  
      cursor = db.get_db().cursor()
-     cursor.execute(query, (report_id, exported_format, title, summary, filters, created_at, created_by,))
+     cursor.execute(query, (report_id, exported_format, title, summary, filters, created_by))
      response = make_response(jsonify('trend report created'), 201)
      return response
 
@@ -58,13 +57,13 @@ def get_trend_reports():
 @analyst.route('/price-history/<int:listing_id>', methods=['GET'])
 def get_price_history(listing_id):
      query = '''
-     SELECT
-        date,
+        SELECT
+        timestamp as date,
         AVG(price) AS average_price
-    FROM PriceHistory
-    WHERE listing_id = %s
-    GROUP BY date
-    ORDER BY date;
+        FROM PriceHistory
+        WHERE listing_id = %s
+        GROUP BY timestamp
+        ORDER BY timestamp;
     '''
  
      current_app.logger.info(f'GET /price-history/{listing_id} route')

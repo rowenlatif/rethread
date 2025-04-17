@@ -916,3 +916,80 @@ INSERT INTO FlaggedContent (flag_id, content_type, content_id, flagged_by, reaso
 (18, 'message', 8, 34, 'Unsolicited offer for unrelated item', 'Low'),
 (19, 'listing', 35, 16, 'Promoting external store', 'Medium'),
 (20, 'review', 61, 8, 'Hostile tone and name-calling', 'High');
+
+INSERT INTO PriceHistory (listing_id, price, timestamp) VALUES
+(1, 120.00, '2025-04-10'),
+(1, 115.00, '2025-04-11'),
+(1, 118.50, '2025-04-12'),
+(1, 117.00, '2025-04-13'),
+(1, 122.00, '2025-04-14');
+INSERT INTO PriceHistory (listing_id, price, timestamp) VALUES
+(2, 90.62, '2025-03-01'),
+(2, 88.50, '2025-03-05'),
+(2, 85.20, '2025-03-10'),
+(2, 87.30, '2025-03-15'),
+(2, 92.75, '2025-03-20');
+INSERT INTO PriceHistory (listing_id, price, timestamp) VALUES
+(3, 132.98, '2025-02-01'),
+(3, 135.50, '2025-02-08'),
+(3, 130.75, '2025-02-15'),
+(3, 128.99, '2025-02-22'),
+(3, 140.25, '2025-03-01');
+INSERT INTO PriceHistory (listing_id, price, timestamp) VALUES
+(4, 221.09, '2025-01-15'),
+(4, 215.50, '2025-01-22'),
+(4, 210.75, '2025-01-29'),
+(4, 205.99, '2025-02-05'),
+(4, 218.25, '2025-02-12');
+INSERT INTO PriceHistory (listing_id, price, timestamp) VALUES
+(5, 62.16, '2025-02-10'),
+(5, 60.50, '2025-02-15'),
+(5, 58.75, '2025-02-20'),
+(5, 65.99, '2025-02-25'),
+(5, 68.25, '2025-03-01');
+
+INSERT INTO SearchQuery (keyword, user_id, location_id, group_id, timestamp) VALUES
+('vintage jeans', 1, 2, 1, '2025-01-05 14:22:33'),
+('vintage jeans', 3, 2, 1, '2025-01-07 10:15:42'),
+('vintage jeans', 5, 3, 2, '2025-01-12 16:30:21'),
+('vintage jeans', 7, 4, 3, '2025-02-03 09:45:12'),
+('vintage jeans', 10, 5, 4, '2025-02-15 11:22:54'),
+('vintage jeans', 12, 5, 4, '2025-03-02 15:10:33'),
+('vintage jeans', 15, 7, 5, '2025-03-18 19:23:45'),
+('vintage jeans', 18, 8, 5, '2025-03-25 08:45:21');
+INSERT INTO SearchQuery (keyword, user_id, location_id, group_id, timestamp) VALUES
+('lululemon', 2, 1, 1, '2025-01-10 13:20:33'),
+('lululemon', 4, 3, 2, '2025-01-18 14:30:42'),
+('lululemon', 6, 4, 3, '2025-01-25 17:15:21'),
+('lululemon', 8, 5, 3, '2025-02-08 10:45:12'),
+('lululemon', 11, 6, 4, '2025-02-19 12:30:54'),
+('lululemon', 14, 7, 4, '2025-03-05 16:22:33'),
+('lululemon', 17, 8, 5, '2025-03-22 18:40:45'),
+('lululemon', 20, 9, 5, '2025-03-30 09:15:21');
+INSERT INTO SearchQuery (keyword, user_id, location_id, group_id, timestamp) VALUES
+('y2k top', 3, 2, 1, '2025-01-03 15:22:33'),
+('y2k top', 5, 3, 2, '2025-01-15 11:10:42'),
+('y2k top', 7, 5, 2, '2025-01-28 18:20:21'),
+('y2k top', 9, 6, 3, '2025-02-10 08:45:12'),
+('y2k top', 12, 7, 4, '2025-02-22 13:22:54'),
+('y2k top', 15, 8, 4, '2025-03-08 17:10:33'),
+('y2k top', 18, 9, 5, '2025-03-24 20:23:45'),
+('y2k top', 20, 10, 5, '2025-04-01 07:45:21');
+INSERT INTO SearchQuery (keyword, user_id, location_id, group_id, timestamp) VALUES
+('nike shoes', 1, 1, 1, '2025-01-08 12:22:33'),
+('nike shoes', 4, 2, 2, '2025-01-20 09:15:42'),
+('nike shoes', 6, 3, 3, '2025-01-30 14:30:21'),
+('nike shoes', 8, 4, 3, '2025-02-12 10:45:12'),
+('nike shoes', 11, 5, 4, '2025-02-25 15:22:54'),
+('nike shoes', 13, 6, 4, '2025-03-10 11:10:33'),
+('nike shoes', 16, 7, 5, '2025-03-26 16:23:45'),
+('nike shoes', 19, 8, 5, '2025-04-05 09:45:21');
+INSERT INTO SearchQuery (keyword, user_id, location_id, group_id, timestamp) VALUES
+('prada bag', 2, 2, 1, '2025-01-12 16:22:33'),
+('prada bag', 5, 3, 2, '2025-01-22 12:15:42'),
+('prada bag', 7, 4, 3, '2025-02-02 18:30:21'),
+('prada bag', 9, 5, 3, '2025-02-14 14:45:12'),
+('prada bag', 12, 6, 4, '2025-02-28 09:22:54'),
+('prada bag', 14, 7, 4, '2025-03-12 13:10:33'),
+('prada bag', 17, 8, 5, '2025-03-28 17:23:45'),
+('prada bag', 20, 9, 5, '2025-04-08 11:45:21');

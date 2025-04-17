@@ -2,6 +2,11 @@ import streamlit as st
 import requests
 import datetime
 import random
+from modules.nav import SideBarLinks
+
+st.set_page_config(layout='wide')
+
+SideBarLinks()
 
 st.header('Create New Listing')
 api_url = "http://localhost:4000/seller/listings"

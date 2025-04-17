@@ -10,7 +10,7 @@ SideBarLinks()
 
 st.header('Profile Analytics')
 
-st.write(f"### Hi, {st.session_state['first_name']}.")
+st.write(f"### Hi, Samantha.")
 
 seller_id = 5
 api_url = f"http://localhost:4000/seller/analytics/{seller_id}"

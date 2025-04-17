@@ -42,7 +42,7 @@ st.write('### Hi! As which user would you like to log in?')
 # functionality, we put a button on the screen that the user 
 # can click to MIMIC logging in as that mock user. 
 
-if st.button("Act as Samatha, a young woman working in PR in NYC", 
+if st.button("Act as Samatha, reThread Seller", 
         type = 'primary', 
         use_container_width=True):
         st.session_state['authenticated'] = True
@@ -52,15 +52,15 @@ if st.button("Act as Samatha, a young woman working in PR in NYC",
         st.switch_page('pages/Seller_Home.py')
 
 
-if st.button('Act as Sally, a college student from Boston, Massachusetts', 
+if st.button('Act as Sally, reThread Shopper', 
         type = 'primary', 
         use_container_width=True):
         st.session_state['authenticated'] = True
         st.session_state['role'] = 'Shopper'
-        st.session_state['first_name'] = 'Laura'
+        st.session_state['first_name'] = 'Sally'
         st.switch_page('pages/Buyer_Home.py')
 
-if st.button('Act as Ashley, App Administrator', 
+if st.button('Act as Ashley, reThread App Administrator', 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
@@ -68,7 +68,7 @@ if st.button('Act as Ashley, App Administrator',
     st.session_state['first_name'] = 'Ashley'
     st.switch_page('pages/20_Admin_Home.py')
 
-if st.button('Act as Fark, a Trend Analyst',
+if st.button('Act as Fark, reThread Trend Analyst',
              type = 'primary',
             use_container_width=True):
     st.session_state['authenticated'] = True

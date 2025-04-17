@@ -14,10 +14,10 @@ st.caption("Analyze how item prices shift over time by listing.")
 # --- Filter Form ---
 st.subheader("View Price Trend")
 with st.form("price_trend_form"):
-    listing_id = st.text_input("Listing ID", placeholder="e.g. 101")
+    listing_id = st.text_input("Listing ID", placeholder="e.g. 1")
     submitted = st.form_submit_button("View Trend")
 
-# --- Fetch + Visualize ---
+# --- Fetch and Visualize ---
 if submitted:
     if not listing_id.strip().isdigit():
         st.warning("Please enter a valid numeric Listing ID.")
@@ -50,6 +50,3 @@ if submitted:
     except requests.RequestException as e:
         logger.error(f"API error: {e}")
         st.error("Failed to fetch price trend data.")
-    except ValueError as e:
-        logger.error(f"Data parsing error: {e}")
-        st.error("Received malformed data from the API.")

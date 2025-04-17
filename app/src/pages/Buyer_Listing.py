@@ -1,41 +1,42 @@
-import logging
 import streamlit as st
 import requests
 import pandas as pd
 from modules.nav import SideBarLinks
 
+
 SideBarLinks()
 
-logger = logging.getLogger(__name__)
-
-## has the listing information posted on the website or listing is no longer posted
-if 'listing' not in st.session_state:
-    st.error('This listing is not available or found.')
-else:
-    listing_id = st.session_state['listing']
-    st.title("Listing Information")
-
-    url = f"http://localhost:4000/listing/listing/{listing_id}"
-    response = requests.get(url)
+st.title("Listings")
 
 
-    if response.status_code == 200:
-        try:
-            listing_data = response.json()
-            ## created a dataframe for the different aspects a user can see with the listing
-            df = pd.DataFrame(listing_data)
+listing_id = st.session_state.get('listing', None)
 
-            listing_info = df.iloc[0].to_dict() if not df.empty else {}
+# default listing
+if listing_id is None:
+    listing_id = st.number_input("Enter a listing ID:", min_value=1, step=1)
 
-            tag = listing_info.get('tag' 'N/A')
-            information = listing_info.get('information', 'N/A')
-            location = listing_info.get('location', 'N/A')
+## allows shoppers to see listings 
+if listing_id:
+    url = f"http://localhost:4000/shopper/listing/{listing_id}"
 
-            st.subheader(' Listing:')
-            st.write(f'**Tag**: {tag}')
-            st.write(f'**Information**: {information}')
-            st.write(f'**Location**: {location}')
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
 
-        ## throws an error is the listing doesn't work
-        except requests.exceptions.JSONDecodeError:
-            st.error(f"Error. Listing not available: {response.text}")
+            if data and len(data) > 0:
+                listing_df = pd.DataFrame(data)
+                st.subheader("Listing Info")
+                st.dataframe(listing_df)
+
+                # lets the shopper see the details of the listing
+                st.markdown("### Listing Details")
+                for key, value in listing_df.iloc[0].items():
+                    st.write(f"**{key.capitalize()}**: {value}")
+            else:
+                st.warning("Listing not found.")
+        else:
+            st.error(f"Error fetching listing: Status code {response.status_code}")
+
+    except Exception as e:
+        st.error(f"An error occurred: {e}")

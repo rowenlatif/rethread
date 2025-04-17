@@ -1,87 +1,129 @@
 import logging
 import requests
-logger = logging.getLogger(__name__)
 import pandas as pd
 import streamlit as st
-from streamlit_extras.app_logo import add_logo
-import matplotlib.pyplot as plt
-import numpy as np
 import plotly.express as px
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from modules.nav import SideBarLinks
 
-# Call the SideBarLinks from the nav module in the modules directory
+logger = logging.getLogger(__name__)
 SideBarLinks()
 
-# set the header and caption of the page
 st.header('Search Trends')
-st.caption("Analyze search query data by keyword, location, time, and/or style group")
-st.write("### Hi, Fark.")
+st.caption("Analyze search query data by keyword, demographic, and time period")
+
+# --- Define sample data for dropdowns ---
+sample_keywords = ["vintage jeans", "lululemon", "y2k top", "nike shoes", "prada bag", 
+                  "brandy melville", "urban outfitters", "zara blazer", "shein top", "adidas campus"]
+age_groups = ["All Ages", "18-24", "25-30", "31-35"]
+genders = ["All Genders", "male", "female", "nonbinary"]
+locations = ["All Locations", "New York City", "Los Angeles", "Chicago", "Boston", "Miami"]
+time_periods = ["Last 7 Days", "Last 30 Days", "Last 3 Months", "Custom Range"]
 
 # --- Filter Form ---
 st.subheader("Filter Search Trends")
 
-with st.form("filters_form"):
-    term_1 = st.text_input("Search Term 1", placeholder="e.g. mesh top")
-    term_2 = st.text_input("Search Term 2 (optional)", "")
-    term_3 = st.text_input("Search Term 3 (optional)", "")
-
-    location = st.selectbox("Location", ["All", "New York", "Los Angeles", "Chicago", "Online"])
-    group = st.selectbox("Aesthetic Group", ["All", "Clean Girl", "Coquette", "Grunge Revival", "Y2K", "Office Siren"])
-    timeframe = st.selectbox("Timeframe", ["Today", "This Week", "This Month", "Custom Range"])
-
+with st.form("search_trends_form"):
+    keyword = st.selectbox("Search Keyword", ["All Keywords"] + sample_keywords)
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        age_group = st.selectbox("Age Group", age_groups)
+        gender = st.selectbox("Gender", genders)
+    
+    with col2:
+        location = st.selectbox("Location", locations)
+        time_period = st.selectbox("Time Period", time_periods)
+    
     custom_range = None
-    if timeframe == "Custom Range":
-        custom_range = st.date_input("Select Date Range", [date(2025, 1, 1), date(2025, 3, 30)])
-
+    if time_period == "Custom Range":
+        end_date = date.today()
+        start_date = end_date - timedelta(days=30)
+        custom_range = st.date_input("Select Date Range", [start_date, end_date])
+    
     submitted = st.form_submit_button("Apply Filters")
 
-# --- If form submitted, fetch and visualize ---
+# --- Fetch and Visualize ---
 if submitted:
-    search_terms = [term.strip() for term in [term_1, term_2, term_3] if term.strip()]
-    if not search_terms:
-        st.warning("Please enter at least one search term.")
-        st.stop()
-
-    st.subheader("📈 Keyword Trend Graph")
-
     try:
-        params = {
-            "terms": search_terms,
-            "location": location if location != "All" else None,
-            "group": group if group != "All" else None,
-            "timeframe": timeframe.lower().replace(" ", "_")
-        }
-
-        if custom_range:
-            params["start_date"] = custom_range[0].isoformat()
-            params["end_date"] = custom_range[1].isoformat()
-
-        # API call (replace with real endpoint)
-        response = requests.get("http://web-api:4000/analyst/search-trends", params=params)
-        response.raise_for_status()
-
-        data = response.json()
-        df = pd.DataFrame(data)
-
-        if df.empty:
-            st.info("No trend data available for the selected filters.")
+        st.info(f"Showing search trends for: Keyword='{keyword}', Age='{age_group}', Gender='{gender}', Location='{location}', Time='{time_period}'")
+        
+        demo_response = requests.get("http://localhost:4000/analyst/search-trends")
+        demo_response.raise_for_status()
+        demo_data = demo_response.json()
+        
+        if not demo_data:
+            st.info("No demographic trend data available.")
         else:
-            fig = px.line(
-                df,
-                x="date",
-                y="search_volume",
-                color="term",
-                markers=True,
-                labels={"date": "Date", "search_volume": "Search Volume", "term": "Search Term"},
-                title="Search Volume Over Time"
-            )
-            fig.update_layout(legend_title_text="Search Terms", xaxis_title=None, yaxis_title=None)
-            st.plotly_chart(fig, use_container_width=True)
+            df = pd.DataFrame(demo_data)
+            st.subheader("👥 Search Activity Demographics")
+            
+            # Convert month number to name for better readability
+            if 'search_month' in df.columns:
+                df['month_name'] = pd.to_numeric(df['search_month']).apply(
+                    lambda x: datetime(2025, int(x), 1).strftime('%B')
+                )
+            
+            # Create visualization by gender
+            if 'gender' in df.columns and 'search_count' in df.columns:
+                fig1 = px.bar(
+                    df,
+                    x='month_name' if 'month_name' in df.columns else 'search_month',
+                    y='search_count',
+                    color='gender',
+                    barmode='group',
+                    labels={
+                        'month_name': 'Month',
+                        'search_month': 'Month',
+                        'search_count': 'Search Count',
+                        'gender': 'Gender'
+                    },
+                    title=f"Search Activity by Gender {'for '+keyword if keyword != 'All Keywords' else ''}"
+                )
+                fig1.update_layout(xaxis_title=None, yaxis_title=None)
+                st.plotly_chart(fig1, use_container_width=True)
+            
+            # Create visualization by age group
+            if 'age' in df.columns and 'search_count' in df.columns:
+                fig2 = px.bar(
+                    df,
+                    x='month_name' if 'month_name' in df.columns else 'search_month',
+                    y='search_count',
+                    color='age',
+                    barmode='group',
+                    labels={
+                        'month_name': 'Month',
+                        'search_month': 'Month', 
+                        'search_count': 'Search Count',
+                        'age': 'Age Group'
+                    },
+                    title=f"Search Activity by Age Group {'for '+keyword if keyword != 'All Keywords' else ''}"
+                )
+                fig2.update_layout(xaxis_title=None, yaxis_title=None)
+                st.plotly_chart(fig2, use_container_width=True)
+            
+            # Create visualization by location
+            if 'location_id' in df.columns and 'search_count' in df.columns:
+                fig3 = px.bar(
+                    df,
+                    x='month_name' if 'month_name' in df.columns else 'search_month',
+                    y='search_count',
+                    color='location_id',
+                    barmode='group',
+                    labels={
+                        'month_name': 'Month',
+                        'search_month': 'Month',
+                        'search_count': 'Search Count',
+                        'location_id': 'Location ID'
+                    },
+                    title=f"Search Activity by Location {'for '+keyword if keyword != 'All Keywords' else ''}"
+                )
+                fig3.update_layout(xaxis_title=None, yaxis_title=None)
+                st.plotly_chart(fig3, use_container_width=True)
 
     except requests.RequestException as e:
-        logger.error(f"Error fetching trend data: {e}")
-        st.error("Failed to fetch trend data from the API.")
+        logger.error(f"API error: {e}")
+        st.error("Failed to fetch search trend data.")
     except ValueError as e:
-        logger.error(f"Error parsing trend data: {e}")
+        logger.error(f"Data parsing error: {e}")
         st.error("Received malformed data from the API.")

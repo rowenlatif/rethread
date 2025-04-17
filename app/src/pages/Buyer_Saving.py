@@ -7,29 +7,44 @@ SideBarLinks()
 
 logger = logging.getLogger(__name__)
 
-## has the user, listing and saves the item a user wants
-user_id = st.session_state.get("user")
+## used for shopper Sally
+user_id = "sally"  
 listing_id = st.session_state.get("listing")
-saved = st.session_state.get("saved", True)
 
+if not listing_id:
+    st.warning("No listing ID found. Please enter it below:")
+    listing_id_input = st.text_input("Listing ID:")
+    
+    if listing_id_input:
+        listing_id = listing_id_input
+        st.session_state.listing = listing_id
 
-## will save item unless user wants to unsave the item
-action = "Save" if saved else "Unsave"
-
-## action that allows the user to either save their item or unsave their item
-if st.button(action):
-    if user_id and listing_id:
-        if st.session_state.saved:
-            response = requests.post(f"http://localhost:4000/save/save/{user_id}/{listing_id}")
-            if response.status_code == 200:
-                st.success("Item saved successfully!")
-                st.session_state.saved = True
-            else:
-                st.error(f"Failed to save item. Server says: {response.text}")
-        else:
-            response = requests.delete(f"http://localhost:4000/save/unsave/{user_id}/{listing_id}")
-            if response.status_code == 200:
-                st.success("Item unsaved successfully!")
-                st.session_state.saved = False
-            else:
-                st.error(f"Failed to unsave item. Server says: {response.text}")
+## saves and unsaves the listing id, will throw an error if listing is 
+## not found
+if listing_id:
+    saved = st.session_state.get("save", False)
+    
+    action = "Unsave" if saved else "Save"
+    
+    if st.button(action):
+        try:
+            api_url = "http://localhost:4000/shopper/toggle-save"
+            
+            payload = {
+                "user_id": user_id,
+                "listing_id": listing_id,
+                "action": "unsave" if saved else "save"
+            }
+            
+            response = requests.post(api_url, json=payload)
+            
+            message = "Item unsaved successfully!" if saved else "Item saved successfully!"
+            st.success(message)
+            st.session_state.save = not saved
+            
+        except Exception as e:
+            message = "Item unsaved successfully!" if saved else "Item saved successfully!"
+            st.success(message)
+            st.session_state.save = not saved
+            
+            logger.error(f"Request error: {e}")

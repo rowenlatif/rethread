@@ -9,14 +9,13 @@ logger = logging.getLogger(__name__)
 
 st.session_state['user'] = "sally"
 
-# Get the current values from session state
 user_id = st.session_state['user']
 
-# Create input fields for message and review
+## allows the users to write messages and reviews
 message = st.text_area("Message to seller", key="message_input")
 review = st.text_area("Review for seller", key="review_input")
 
-# Update session state based on input
+
 st.session_state['message'] = message
 st.session_state['review'] = review
 
@@ -28,7 +27,7 @@ elif review:
 else:
     action = "Submit"
 
-# Create a button with the appropriate action text
+## this allows the user to write the message or review
 if st.button(action):
     if user_id:
         if st.session_state['message']:
