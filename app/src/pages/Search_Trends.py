@@ -14,9 +14,9 @@ from modules.nav import SideBarLinks
 SideBarLinks()
 
 # set the header and caption of the page
-st.header('Search Trends Analytics')
+st.header('Search Trends')
 st.caption("Analyze search query data by keyword, location, time, and/or style group")
-st.write(f"### Hi, {st.session_state['first_name']}.")
+st.write("### Hi, Fark.")
 
 # --- Filter Form ---
 st.subheader("Filter Search Trends")

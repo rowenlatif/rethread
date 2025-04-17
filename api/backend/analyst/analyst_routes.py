@@ -40,18 +40,32 @@ def log_trend_report():
      cursor.execute(query, (report_id, exported_format, title, summary, filters, created_at, created_by,))
      response = make_response(jsonify('trend report created'), 201)
      return response
+
+@analyst.route('/trend-reports', methods=['GET'])
+def get_trend_reports():
+    current_app.logger.info('GET /trend-reports route')
+
+    query = '''SELECT report_id, exported_format, title, summary, filters, created_at, created_by FROM TrendReport'''
+    
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    results = cursor.fetchall()
+
+    response = make_response(jsonify(results))
+    response.status_code = 200
+    return response
  
 @analyst.route('/price-history/<int:listing_id>', methods=['GET'])
 def get_price_history(listing_id):
-     query= '''
+     query = '''
      SELECT
-         listing_id,
-         MIN(price) AS min_price,
-         MAX(price) AS max_price,
-         (MAX(price) - MIN(price)) AS price_range
-     FROM PriceHistory
-     GROUP BY listing_id
-     ORDER BY price_range DESC;'''
+        date,
+        AVG(price) AS average_price
+    FROM PriceHistory
+    WHERE listing_id = %s
+    GROUP BY date
+    ORDER BY date;
+    '''
  
      current_app.logger.info(f'GET /price-history/{listing_id} route')
      cursor = db.get_db().cursor()

@@ -14,11 +14,17 @@ st.write('')
 st.write('')
 st.header('What would you like to do today?')
 
-if st.button('🚩 Flagged Content Inbox'):
-    st.switch_page('pages/21_Flagged_Content')
-if st.button('🗂️View all disputes in progress'):
-    st.switch_page('pages/22_In_Prog_Disputes')
-if st.button('🗂️Notes and resolution history'):
-    st.switch_page('pages/23_Res_History')
-if st.button('📝 View platform reviews'):
-    st.switch_page('pages/24_Ratings')
+if st.button('Flagged Content Indox',
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/21_Flagged_Content.py')
+
+if st.button('View all verified users',
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/22_In_Prog_Disputes.py')
+
+if st.button('View platform reviews',
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/24_Ratings.py')

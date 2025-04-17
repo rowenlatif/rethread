@@ -40,7 +40,7 @@ CREATE TABLE Tag (
 
 CREATE TABLE Listing (
     listing_id int PRIMARY KEY NOT NULL,
-    listing_title VARCHAR(255),
+    title VARCHAR(255),
     description TEXT,
     price DECIMAL(10,2),
     `condition` VARCHAR(100),
@@ -52,10 +52,6 @@ CREATE TABLE Listing (
     seller_id INT REFERENCES User(user_id) ON DELETE CASCADE,
     group_id INT REFERENCES `Group`(group_id)
 );
-
-ALTER TABLE Listing
-MODIFY COLUMN listing_id INT AUTO_INCREMENT PRIMARY KEY;
-
 
 CREATE TABLE SearchQuery (
     query_id SERIAL PRIMARY KEY,
@@ -898,3 +894,25 @@ INSERT INTO ListingAnalytics (listing_id, views, shares, saves) VALUES
 (8, 180, 30, 45),
 (9, 130, 25, 38),
 (10, 90, 14, 26);
+
+INSERT INTO FlaggedContent (flag_id, content_type, content_id, flagged_by, reason, severity) VALUES
+(1, 'listing', 3, 10, 'Contains offensive language in the title', 'High'),
+(2, 'listing', 19, 12, 'Misleading description', 'Medium'),
+(3, 'listing', 6, 15, 'Spammy listing reposted multiple times', 'Low'),
+(4, 'listing', 27, 19, 'Fake or fraudulent item', 'High'),
+(5, 'listing', 8, 21, 'Price manipulation suspected', 'Medium'),
+(6, 'review', 13, 9, 'Defamatory comment about seller', 'High'),
+(7, 'review', 2, 5, 'Inappropriate language used', 'Medium'),
+(8, 'review', 39, 23, 'Review is unrelated to the transaction', 'Low'),
+(9, 'review', 70, 31, 'Spam review repeated across users', 'Medium'),
+(10, 'review', 55, 18, 'Accusatory and inflammatory tone', 'High'),
+(11, 'message', 5, 14, 'User sent inappropriate message', 'High'),
+(12, 'message', 18, 6, 'Soliciting off-platform communication', 'Medium'),
+(13, 'message', 44, 17, 'Spam or copy-paste message pattern', 'Low'),
+(14, 'message', 33, 28, 'Threatening language detected', 'High'),
+(15, 'message', 49, 26, 'Message contains personal information', 'Medium'),
+(16, 'listing', 12, 22, 'Counterfeit item suspected', 'High'),
+(17, 'review', 62, 13, 'False claims about product condition', 'Medium'),
+(18, 'message', 8, 34, 'Unsolicited offer for unrelated item', 'Low'),
+(19, 'listing', 35, 16, 'Promoting external store', 'Medium'),
+(20, 'review', 61, 8, 'Hostile tone and name-calling', 'High');
