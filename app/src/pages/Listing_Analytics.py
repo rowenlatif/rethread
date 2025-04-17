@@ -20,11 +20,11 @@ response = requests.get(api_url)
 data = response.json()
 graph_data = pd.DataFrame(data)
 
-# Add a filter for individual listings
+
 selected_listing = st.selectbox("Select a Listing to Analyze", graph_data['title'].tolist())
 filtered_data = graph_data[graph_data['title'] == selected_listing]
 
-# Display metrics for the selected listing
+
 st.subheader(f"Analytics for: {selected_listing}")
 col1, col2, col3 = st.columns(3)
 with col1:
@@ -34,19 +34,19 @@ with col2:
 with col3:
     st.metric("Shares", filtered_data['shares'].values[0])
 
-# Comparison with other listings
+
 st.subheader("How this listing compares to others")
 fig, ax = plt.subplots(figsize=(10, 5))
-# Sort by views for better visualization
+
 sorted_data = graph_data.sort_values('views', ascending=False)
-# Highlight the selected listing
+
 colors = ['red' if title != selected_listing else 'blue' for title in sorted_data['title']]
 sns.barplot(x='title', y='views', data=sorted_data, palette=colors, ax=ax)
 plt.xticks(rotation=45, ha='right')
 plt.title('Views Comparison Across Listings')
 st.pyplot(fig)
 
-# Show engagement ratio (saves/views)
+
 st.subheader("Engagement Analysis")
 graph_data['save_rate'] = graph_data['saves'] / graph_data['views'] * 100
 graph_data['share_rate'] = graph_data['shares'] / graph_data['views'] * 100
@@ -62,6 +62,5 @@ plt.xticks(rotation=45, ha='right')
 plt.title('Save and Share Rates by Listing')
 st.pyplot(fig2)
 
-# Original data at the bottom
 st.subheader("All Listings Data")
 st.dataframe(graph_data)

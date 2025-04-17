@@ -98,6 +98,7 @@ CREATE TABLE FlaggedContent (
     flagged_by INT REFERENCES User(user_id),
     reason TEXT,
     severity VARCHAR(50),
+    status VARCHAR(20) DEFAULT 'in progress',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -895,27 +896,27 @@ INSERT INTO ListingAnalytics (listing_id, views, shares, saves) VALUES
 (9, 130, 25, 38),
 (10, 90, 14, 26);
 
-INSERT INTO FlaggedContent (flag_id, content_type, content_id, flagged_by, reason, severity) VALUES
-(1, 'listing', 3, 10, 'Contains offensive language in the title', 'High'),
-(2, 'listing', 19, 12, 'Misleading description', 'Medium'),
-(3, 'listing', 6, 15, 'Spammy listing reposted multiple times', 'Low'),
-(4, 'listing', 27, 19, 'Fake or fraudulent item', 'High'),
-(5, 'listing', 8, 21, 'Price manipulation suspected', 'Medium'),
-(6, 'review', 13, 9, 'Defamatory comment about seller', 'High'),
-(7, 'review', 2, 5, 'Inappropriate language used', 'Medium'),
-(8, 'review', 39, 23, 'Review is unrelated to the transaction', 'Low'),
-(9, 'review', 70, 31, 'Spam review repeated across users', 'Medium'),
-(10, 'review', 55, 18, 'Accusatory and inflammatory tone', 'High'),
-(11, 'message', 5, 14, 'User sent inappropriate message', 'High'),
-(12, 'message', 18, 6, 'Soliciting off-platform communication', 'Medium'),
-(13, 'message', 44, 17, 'Spam or copy-paste message pattern', 'Low'),
-(14, 'message', 33, 28, 'Threatening language detected', 'High'),
-(15, 'message', 49, 26, 'Message contains personal information', 'Medium'),
-(16, 'listing', 12, 22, 'Counterfeit item suspected', 'High'),
-(17, 'review', 62, 13, 'False claims about product condition', 'Medium'),
-(18, 'message', 8, 34, 'Unsolicited offer for unrelated item', 'Low'),
-(19, 'listing', 35, 16, 'Promoting external store', 'Medium'),
-(20, 'review', 61, 8, 'Hostile tone and name-calling', 'High');
+INSERT INTO FlaggedContent (flag_id, content_type, content_id, flagged_by, reason, severity, status) VALUES
+(1, 'listing', 3, 10, 'Contains offensive language in the title', 'High', 'in progress'),
+(2, 'listing', 19, 12, 'Misleading description', 'Medium', 'in progress'),
+(3, 'listing', 6, 15, 'Spammy listing reposted multiple times', 'Low', 'in progress'),
+(4, 'listing', 27, 19, 'Fake or fraudulent item', 'High', 'in progress'),
+(5, 'listing', 8, 21, 'Price manipulation suspected', 'Medium', 'in progress'),
+(6, 'review', 13, 9, 'Defamatory comment about seller', 'High', 'in progress'),
+(7, 'review', 2, 5, 'Inappropriate language used', 'Medium', 'in progress'),
+(8, 'review', 39, 23, 'Review is unrelated to the transaction', 'Low', 'in progress'),
+(9, 'review', 70, 31, 'Spam review repeated across users', 'Medium', 'in progress'),
+(10, 'review', 55, 18, 'Accusatory and inflammatory tone', 'High', 'in progress'),
+(11, 'message', 5, 14, 'User sent inappropriate message', 'High', 'in progress'),
+(12, 'message', 18, 6, 'Soliciting off-platform communication', 'Medium', 'in progress'),
+(13, 'message', 44, 17, 'Spam or copy-paste message pattern', 'Low', 'in progress'),
+(14, 'message', 33, 28, 'Threatening language detected', 'High', 'in progress'),
+(15, 'message', 49, 26, 'Message contains personal information', 'Medium', 'in progress'),
+(16, 'listing', 12, 22, 'Counterfeit item suspected', 'High', 'in progress'),
+(17, 'review', 62, 13, 'False claims about product condition', 'Medium', 'in progress'),
+(18, 'message', 8, 34, 'Unsolicited offer for unrelated item', 'Low', 'in progress'),
+(19, 'listing', 35, 16, 'Promoting external store', 'Medium', 'in progress'),
+(20, 'review', 61, 8, 'Hostile tone and name-calling', 'High', 'in progress');
 
 INSERT INTO PriceHistory (listing_id, price, timestamp) VALUES
 (1, 120.00, '2025-04-10'),

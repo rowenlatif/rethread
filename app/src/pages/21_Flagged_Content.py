@@ -1,44 +1,62 @@
-import logging
-logger = logging.getLogger(__name__)
 import streamlit as st
 from modules.nav import SideBarLinks
 import requests
-import json
 
 st.set_page_config(layout='wide')
-
 SideBarLinks()
+st.title('Flagged Content Admin')
 
-st.title('App Administration Page')
+# Filters
+content_type = st.selectbox("Filter by:", ["all", "message", "user", "listing", "review"])
+status_filter = st.selectbox("Status:", ["all", "in progress", "resolved", "unresolved"])
 
-st.write('\n\n')
-st.write('## 📬 Flagged Content Inbox')
-st.write('### All Flagged Content')
-
-content_type = st.selectbox("Filter by content type:", ["all", "message", "user", "listing", "review"])
-
-flagged_content = []
-
+# Get data
 try:
     response = requests.get('http://localhost:4000/admin/flags')
-    flagged_content = response.json()
+    items = response.json()
 except:
-    st.error("Could not connect to the database to retrieve flagged content.")
+    st.error("Database connection error")
+    items = []
 
-# filter content by type
-if flagged_content:
-    if content_type != "all":
-        filtered_content = []
-        for item in flagged_content:
-            item_type = item.get("content_type", "")
-            if item_type == content_type:
-                filtered_content.append(item)
-    else:
-        filtered_content = flagged_content
-else:
-    filtered_content = []
+# Filter items
+filtered = []
+for item in items:
+    type_match = content_type == "all" or item.get("content_type", "") == content_type
+    status_match = status_filter == "all" or item.get("status", "in progress") == status_filter
+    if type_match and status_match:
+        filtered.append(item)
 
-if filtered_content:
-    st.dataframe(filtered_content)
+# Status update
+col1, col2, col3 = st.columns(3)
+with col1:
+    flag_id = st.number_input("ID:", min_value=1, step=1)
+with col2:
+    new_status = st.selectbox("Set status:", ["in progress", "resolved", "unresolved"])
+with col3:
+    if st.button("Update"):
+        try:
+            response = requests.put(
+                f'http://localhost:4000/admin/flags/{flag_id}',
+                json={"status": new_status}
+            )
+            if response.status_code == 200:
+                st.success(f"Updated to '{new_status}'")
+            else:
+                st.error("Update failed")
+        except:
+            st.error("Connection error")
+
+# Display items
+if filtered:
+    for item in filtered:
+        status = item.get('status', 'in progress')
+        status_icon = "🔄" if status == "in progress" else "✅" if status == "resolved" else "❌"
+        
+        st.write(f"**ID {item.get('flag_id')}** | {item.get('content_type')} | {status_icon} {status} | {item.get('reason')}")
+        st.write("---")
 else:
-    st.write("No flagged content found for this filter.")
+    st.info("No items found")
+
+# Add refresh button
+if st.button("Refresh"):
+    pass  # Streamlit will naturally rerun

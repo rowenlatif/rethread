@@ -81,7 +81,7 @@ if not listings_df.empty:
                         else:
                             st.session_state.saved_listings.append(listing_id)
                         
-                    st.experimental_rerun()
+                    st.rerun()  # Changed from st.experimental_rerun()
 else:
     st.info("No listings found.")
 
@@ -97,4 +97,3 @@ if st.session_state.saved_listings and not listings_df.empty:
         st.info("You haven't saved any listings yet.")
 else:
     st.info("You haven't saved any listings yet.")
-
