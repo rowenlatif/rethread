@@ -4,36 +4,64 @@ import requests
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
+import seaborn as sns
 from modules.nav import SideBarLinks
 
-# Call the SideBarLinks from the nav module in the modules directory
 SideBarLinks()
 
-# set the header of the page
 st.header('Listing Analytics')
 
-# You can access the session state to make a more customized/personalized app experience
 st.write(f"### Hi, {st.session_state['first_name']}.")
-seller_id = 10  # Replace with actual seller ID or get from session state
-api_url = f"http://localhost:4000/seller/analytics/{seller_id}"
-response = requests.get(api_url)
-st.write("Status code:", response.status_code)
-st.write("Response content:", response.text)
 
-# Check if request was successful
-# Parse JSON response into a pandas DataFrame
+seller_id = 5
+api_url = f"http://localhost:4000/seller/analytics/{seller_id}"
+
+response = requests.get(api_url)
 data = response.json()
 graph_data = pd.DataFrame(data)
 
-#steamlit dataframe
-st.dataframe(graph_data)
+# Add a filter for individual listings
+selected_listing = st.selectbox("Select a Listing to Analyze", graph_data['title'].tolist())
+filtered_data = graph_data[graph_data['title'] == selected_listing]
 
-# Show summary statistics
-st.subheader("Summary Statistics")
-st.write(graph_data.describe())
+# Display metrics for the selected listing
+st.subheader(f"Analytics for: {selected_listing}")
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.metric("Views", filtered_data['views'].values[0])
+with col2:
+    st.metric("Saves", filtered_data['saves'].values[0])
+with col3:
+    st.metric("Shares", filtered_data['shares'].values[0])
 
-# Create visualizations
-st.subheader("Engagement Metrics")
-fig, ax = plt.subplots()
-graph_data[['views', 'shares', 'saves']].mean().plot(kind='bar', ax=ax)
+# Comparison with other listings
+st.subheader("How this listing compares to others")
+fig, ax = plt.subplots(figsize=(10, 5))
+# Sort by views for better visualization
+sorted_data = graph_data.sort_values('views', ascending=False)
+# Highlight the selected listing
+colors = ['red' if title != selected_listing else 'blue' for title in sorted_data['title']]
+sns.barplot(x='title', y='views', data=sorted_data, palette=colors, ax=ax)
+plt.xticks(rotation=45, ha='right')
+plt.title('Views Comparison Across Listings')
 st.pyplot(fig)
+
+# Show engagement ratio (saves/views)
+st.subheader("Engagement Analysis")
+graph_data['save_rate'] = graph_data['saves'] / graph_data['views'] * 100
+graph_data['share_rate'] = graph_data['shares'] / graph_data['views'] * 100
+
+fig2, ax2 = plt.subplots(figsize=(10, 5))
+metrics_data = pd.melt(graph_data,
+                      id_vars=['title'],
+                      value_vars=['save_rate', 'share_rate'],
+                      var_name='Metric',
+                      value_name='Percentage')
+sns.barplot(x='title', y='Percentage', hue='Metric', data=metrics_data, ax=ax2)
+plt.xticks(rotation=45, ha='right')
+plt.title('Save and Share Rates by Listing')
+st.pyplot(fig2)
+
+# Original data at the bottom
+st.subheader("All Listings Data")
+st.dataframe(graph_data)
