@@ -14,7 +14,7 @@ import os
 def create_app():
     app = Flask(__name__)
 
-    # Load environment variables from .env file
+    # Load environment variables from .env.template file
     load_dotenv()
 
     # Secure config

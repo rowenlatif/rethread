@@ -2,5 +2,5 @@
 secrets.toml
 __pycache__
 secrets/
-.env
+api/.env.template
 .env.local
