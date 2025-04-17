@@ -3,7 +3,7 @@
 ###
 
 #importing create app function
-from backend.rest_entry import create_app
+from api.backend.rest_entry import create_app
 
 #c
 app = create_app()
