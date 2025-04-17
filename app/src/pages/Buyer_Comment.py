@@ -1,47 +1,42 @@
 import logging
 import streamlit as st
-import requests
 from modules.nav import SideBarLinks
-
-SideBarLinks()
+import requests
 
 logger = logging.getLogger(__name__)
 
-st.session_state['user'] = "sally"
+SideBarLinks()
 
+st.session_state['user'] = "sally"
 user_id = st.session_state['user']
 
-## allows the users to write messages and reviews
+st.title("Marketplace Communications")
+
+# Message section
+st.subheader("Message to Seller")
 message = st.text_area("Message to seller", key="message_input")
-review = st.text_area("Review for seller", key="review_input")
 
-
-st.session_state['message'] = message
-st.session_state['review'] = review
-
-# Determine which action to perform
-if message:
-    action = "Send Message"
-elif review:
-    action = "Submit Review"
-else:
-    action = "Submit"
-
-## this allows the user to write the message or review
-if st.button(action):
-    if user_id:
-        if st.session_state['message']:
-            response = requests.put(f"http://localhost:4000/message/message/{user_id}")
-            if response.status_code == 200:
-                st.success("Message sent")
-            else:
-                st.error("Failed to send message.")
+# Send button
+if st.button("Send Message"):
+    if message:
+        # Simplified data with fixed values
+        data = {
+            "message_id": "msg123",
+            "sender_id": user_id,
+            "recipient_id": "user456",
+            "listing_id": "1",
+            "content": message
+        }
         
-        elif st.session_state['review']:
-            response = requests.put(f"http://localhost:4000/message/review/{user_id}")
+        try:
+            response = requests.post("http://localhost:4000/shopper/message", json=data)
             if response.status_code == 200:
-                st.success("Review submitted successfully!")
+                st.success("Message sent!")
             else:
-                st.error("Failed to send review.")
+                st.error(f"Error: {response.status_code}")
+        except Exception as e:
+            st.error(f"Connection error: {str(e)}")
     else:
-        st.error("User not logged in. Please log in to continue.")
+        st.warning("Please enter a message")
+
+
