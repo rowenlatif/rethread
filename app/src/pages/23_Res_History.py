@@ -13,7 +13,7 @@ st.title('App Administration Page')
 st.write('\n\n')
 st.write('## All in-progress disputes')
 
-all_disputes = requests.get('http://api:4000/d/disputes').json() ## need to update with actual api requests
+all_disputes = requests.get('http://localhost:4000/admin/messages').json() ## need to update with actual api requests
 resolved_disputes = [d for d in all_disputes if d.get("status", "").lower() == "resolved"]
 
 try:

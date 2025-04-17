@@ -15,7 +15,7 @@ st.write('## All Platform Reviews')
 
 try:
     # need to update path
-    reviews = requests.get('http://api:4000/r/review').json()
+    reviews = requests.get('http://localhost:4000/admin/reviews/flagged').json()
 except:
     st.error("could not connect to the database to retrieve reviews.")
 

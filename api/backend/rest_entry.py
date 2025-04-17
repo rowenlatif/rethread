@@ -3,11 +3,12 @@ logging.basicConfig(level = logging.DEBUG)
 
 from flask import Flask
 
-from backend.db_connection import db
-from admin.admin_routes import admin
-from shopper.shopper_routes import shopper
-from seller.seller_routes import seller
-from analyst.analyst_routes import analyst
+from .db_connection import db
+from .shopper.shopper_routes import shopper
+from .seller.seller_routes import seller
+from .analyst.analyst_routes import analyst
+from .resources.resources_routes import resources
+from .admin.admin_routes import admin
 from dotenv import load_dotenv
 import os
 
@@ -40,5 +41,6 @@ def create_app():
     app.register_blueprint(shopper, url_prefix="/shopper")
     app.register_blueprint(seller, url_prefix="/seller")
     app.register_blueprint(analyst, url_prefix="/analyst")
+    app.register_blueprint(resources, url_prefix="/resources")
 
     return app

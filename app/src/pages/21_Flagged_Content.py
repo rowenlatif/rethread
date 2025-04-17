@@ -18,7 +18,7 @@ st.write('### All Flagged Content')
 content_type = st.selectbox("Filter by content type:", ["all", "messages", "users", "listings"])
 
 try:
-    flagged_content = requests.get('http://api:4000/admin/flags').json()
+    flagged_content = requests.get('http://localhost:4000/admin/flags').json()
 except:
     st.error("could not connect to the database to retrieve flagged content.")
 

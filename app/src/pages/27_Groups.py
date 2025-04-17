@@ -13,7 +13,7 @@ st.title('App Administration Page')
 st.write('\n\n')
 st.write('## Create New Group')
 
-post_group = requests.post('http://api:4000/groups').json() 
+post_group = requests.post('http://localhost:4000/admin/groups').json()
 
 with st.form("Create a new group"):
     group_id = st.text_input("Input New Groups ID")
@@ -31,12 +31,12 @@ with st.form("Create a new group"):
         data['created_by'] = group_creator
         st.write(data)
 
-        requests.post('http://api:4000/groups', json=data)
+        requests.post('http://localhost:4000/groups', json=data)
 
 st.write('\n\n')
 st.write('## All Groups')
 
-groups = requests.get('http://api:4000/groups/all').json() 
+groups = requests.get('http://localhost:4000/admin/groups/all').json()
 
 try:
     if groups:
@@ -44,4 +44,4 @@ try:
     else:
         st.write("no groups at the time")
 except:
-    st.write("could not conenct to database to retrieve groups")
+    st.write("could not connect to database to retrieve groups")

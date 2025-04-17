@@ -12,7 +12,7 @@ from modules.nav import SideBarLinks
 SideBarLinks()
 st.header("Price Trends Analytics")
 st.caption("Analyze how item prices shift over time by style, location, and more.")
-st.write(f"### Hi, {st.session_state['first_name']}.")
+st.write(f"### Hi, Fark.")
 
 # --- Filter Form ---
 st.subheader("Filter Price Trends")
@@ -48,7 +48,7 @@ if submitted:
             params["end_date"] = custom_range[1].isoformat()
 
         # API call (replace with real endpoint)
-        response = requests.get("http://localhost:4000/analyst/price-trends", params=params)
+        response = requests.get("http://localhost:4000/analyst/price-history/<int:listing_id>", params=params)
         response.raise_for_status()
 
         data = response.json()

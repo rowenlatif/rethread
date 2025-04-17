@@ -13,7 +13,7 @@ st.title('App Administration Page')
 st.write('\n\n')
 st.write('## All user verifications')
 
-verifications = requests.get('http://api:4000/verifications').json()
+verifications = requests.get('http://localhost:4000/admin/verifications').json()
 
 try:
     if verifications:

@@ -19,10 +19,10 @@ def ShopperNav():
         "pages/Buyer_Home.py", label = "Buyer Home", icon = "🛍️"
     )
     st.sidebar.page_link(
-        "pages/comment.py", label = "Users Comments", icon = "💬"
+        "pages/Buyer_Comment.py", label = "Users Comments", icon = "💬"
     )
     st.sidebar.page_link(
-        "pages/listing.py", label = "Listings", icon = "📄"
+        "pages/Buyer_Listing.py", label = "Listings", icon = "📄"
     )
     st.sidebar.page_link(
     "pages/saving.py", label = "Savings", icon = "⏳"
@@ -83,7 +83,7 @@ def SideBarLinks(show_home=False):
     """
     This function handles adding links to the sidebar of the app based upon the logged-in user's role, which was put in the streamlit session_state object when logging in.
     """
-    
+
     # Add a logo to the sidebar always
     st.sidebar.image("app/src/assets/logo.png", width=150)
 
@@ -96,7 +96,7 @@ def SideBarLinks(show_home=False):
         # Show the Home page link (the landing page)
         HomeNav()
 
-    
+
     # Show the other page navigators depending on the users' role.
     if st.session_state["authenticated"]:
 
@@ -108,10 +108,10 @@ def SideBarLinks(show_home=False):
             AdminNav()
         elif st.session_state["role"] == "trend_analyst":
             TrendAnalystNav()
-    
+
     # Always show the About page at the bottom of the list of links
     # AboutPageNav()
-       
+
     if st.session_state["authenticated"]:
         # Always show a logout button if there is a logged in user
         if st.sidebar.button("Logout"):

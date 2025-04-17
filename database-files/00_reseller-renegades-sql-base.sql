@@ -40,7 +40,7 @@ CREATE TABLE Tag (
 
 CREATE TABLE Listing (
     listing_id int PRIMARY KEY NOT NULL,
-    title VARCHAR(255),
+    listing_title VARCHAR(255),
     description TEXT,
     price DECIMAL(10,2),
     `condition` VARCHAR(100),
