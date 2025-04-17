@@ -68,10 +68,10 @@ if st.button('Act as Ashley, App Administrator',
     st.session_state['first_name'] = 'Ashley'
     st.switch_page('pages/20_Admin_Home.py')
 
-if st.button('Act as Mark, a Trend Analyst',
+if st.button('Act as Fark, a Trend Analyst',
              type = 'primary',
             use_container_width=True):
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'trend_analyst'
-    st.session_state['first_name'] = 'Mark'
+    st.session_state['first_name'] = 'Fark'
     st.switch_page('pages/Trend_Analyst_Home.py')

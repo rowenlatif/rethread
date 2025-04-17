@@ -48,7 +48,7 @@ with st.expander("Click to build a new trend report"):
             }
 
             try:
-                response = requests.post("http://web-api:4000/trendreport", json=payload)
+                response = requests.post("http://localhost:4000/trendreport", json=payload)
                 response.raise_for_status()
                 st.success("Report created successfully!")
                 st.rerun()

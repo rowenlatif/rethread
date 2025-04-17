@@ -58,7 +58,7 @@ if submitted:
             params["end_date"] = custom_range[1].isoformat()
 
         # API call (replace with real endpoint)
-        response = requests.get("http://web-api:4000//analytics/search-trends", params=params)
+        response = requests.get("http://web-api:4000/analyst/search-trends", params=params)
         response.raise_for_status()
 
         data = response.json()
