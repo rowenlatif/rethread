@@ -3,7 +3,7 @@ logging.basicConfig(level = logging.DEBUG)
 
 from flask import Flask
 
-from db_connection import db
+from backend.db_connection import db
 from admin.admin_routes import admin
 from shopper.shopper_routes import shopper
 from seller.seller_routes import seller
